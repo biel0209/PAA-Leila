@@ -42,10 +42,13 @@ int somaArv(No *r, int a, int b)
 int main() {
     int op, valor;
     No *raiz = NULL;
-    int a = 5; //limite inferior
-    int b = 25; //limite superior
 
-    int v[10] = {0,9,15,92,23,84,22,5,7,3};
+    int a = 4; //limite inferior
+    int b = 7; //limite superior
+
+    int v[10] = {2,8,3,0,9,5,4,7,10,15};
+    //int v[10] = {0,9,15,92,23,84,22,5,7,3};
+    
     for(int i=0; i<10; i++)
        raiz = inserir(raiz, v[i]);// não precisa da estrutura ArvB
 
