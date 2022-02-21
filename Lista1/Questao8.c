@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<stdbool.h>
 
-
-void parenteses(char *string)
+bool parenteses(char *string)
 {
-    
+    bool resp;
     int qtdAberto = 0, qtdFechado = 0;
     for(int i=0; string[i] != EOF; i++) {
         if (string[i] == '('){
@@ -15,21 +15,22 @@ void parenteses(char *string)
     }
 
     if (qtdAberto == qtdFechado)
-        return true;
+        resp = true;
     else
-        return false;   
+        resp = false;   
+    return resp;
     
 }
 
 int main()
 {
+    //Casos de teste
     char expressao[50] = "((a + b) + (c * d))";
+    //char expressao[50] = "(( a + b) + 1";
+    //char expressao[50] = ") (a + b)) + (c * d)";
 
-    parenteses(expressao);
+    printf(parenteses(expressao) ? "True" : "False");
 
-    
-
-    
     return 0;
 }
 
