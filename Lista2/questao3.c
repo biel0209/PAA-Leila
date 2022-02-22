@@ -35,13 +35,13 @@ void imprimirVetor(Registro *vet)
 {
     for (int i = 0; i < TAM; i++){
         printf("%d/0%d/%d - Quantidade de casos: %d\n", 
-                        vet[i].dia = i+1, vet[i].mes = 3, 
-                        vet[i].ano = 2022, vet[i].qtd_casos);
+                        vet[i].dia, vet[i].mes, 
+                        vet[i].ano, vet[i].qtd_casos);
     }
 }
 
 int buscarData(Registro *v) { 
-   int e = -1, d = TAM; // atenção!
+   int e = -1, d = TAM;
    while (e < d-1) {  
       int m = (e + d)/2;
       if (v[m].qtd_casos > v[m-1].qtd_casos) e = m;
