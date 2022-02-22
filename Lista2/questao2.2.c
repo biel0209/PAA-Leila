@@ -41,18 +41,28 @@ void imprimir(No *reg) {
     }
 }
 
+int gerarAleatorio()
+{
+    int qtd_aleatoria = rand() % ((int)TAM/2);
+    while(qtd_aleatoria == 0)
+        qtd_aleatoria = rand() % ((int)TAM/2);
+    return qtd_aleatoria;
+}
+
+void buscarP(No **reg)
+{
+    for (int i = 0; i < TAM; i++){
+        char nome[5];
+        snprintf (nome, 5, "P%d", i+1);
+        *reg = inserir(*reg, nome, gerarAleatorio());
+    }
+    imprimir(*reg);
+}
+
 int main()
 {
     srand(time(NULL));
     No *reg = NULL;
-    for (int i = 0; i < TAM; i++){
-        int qtd_aleatoria = rand() % ((int)TAM/2);
-        while(qtd_aleatoria == 0)
-            qtd_aleatoria = rand() % ((int)TAM/2);
-        char nome[5];
-        snprintf (nome, 5, "P%d", i+1);
-        reg = inserir(reg, nome, qtd_aleatoria);
-    }
-    imprimir(reg);
+    buscarP(&reg);
     return 0;
 }

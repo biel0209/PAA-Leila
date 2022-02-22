@@ -55,20 +55,30 @@ void ordenar(Registro *p)
     }
 }
 
+int gerarAleatorio()
+{
+    int qtd_aleatoria = rand() % ((int)TAM/2);
+    while(qtd_aleatoria == 0)
+        qtd_aleatoria = rand() % ((int)TAM/2);
+    return qtd_aleatoria;
+}
+
+void buscarP(Registro **reg)
+{
+    for (int i = 0; i < TAM; i++){
+            char nome[5];
+            snprintf (nome, 5, "P%d", i+1 );
+            insere(reg, nome, gerarAleatorio());
+    }
+    ordenar(*reg);
+    imprimirInfluentes(*reg, 100);
+
+}
+
 int main()
 {
     srand(time(NULL));
     Registro *reg = NULL;
-
-    for (int i = 0; i < TAM; i++){
-        int qtd_aleatoria = rand() % ((int)TAM/2);
-        while(qtd_aleatoria == 0)
-            qtd_aleatoria = rand() % ((int)TAM/2);
-        char nome[5];
-        snprintf (nome, 5, "P%d", i+1 );
-        insere(&reg, nome, qtd_aleatoria);
-    }
-    ordenar(reg);
-    imprimirInfluentes(reg, 100);
+    buscarP(&reg);
     return 0;
 }
