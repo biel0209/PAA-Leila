@@ -20,16 +20,6 @@ void insere (Registro **p, char *nome, int qtd_amigos)
 
 }
 
-void imprimir (Registro *p){
-    if (p != NULL){
-        while (p){
-            printf("Nome: %s - Qtd de amigos: %d\n", p->nome, p->qtd_amigos);
-            p = p->prox;
-
-        }
-    }
-}
-
 void imprimirInfluentes (Registro *p, int limite){
     if (p != NULL){
         printf("\n----Os %d mais influentes\n", limite);
@@ -37,7 +27,6 @@ void imprimirInfluentes (Registro *p, int limite){
             printf("Nome: %s - Qtd de amigos: %d\n", p->nome, p->qtd_amigos);
             p = p->prox;
             limite--;
-
         }
     }
 }
@@ -80,7 +69,6 @@ int main()
         insere(&reg, nome, qtd_aleatoria);
     }
     ordenar(reg);
-    imprimir(reg);
     imprimirInfluentes(reg, 100);
     return 0;
 }
