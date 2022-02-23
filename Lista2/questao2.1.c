@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<time.h>
-#define TAM 250
+#include <time.h>
+#define TAM 10
 
 typedef struct registro{
     char nome[5];
@@ -66,19 +66,29 @@ int gerarAleatorio()
 void buscarP(Registro **reg)
 {
     for (int i = 0; i < TAM; i++){
-            char nome[5];
-            snprintf (nome, 5, "P%d", i+1 );
-            insere(reg, nome, gerarAleatorio());
+        char nome[5];
+        snprintf (nome, 5, "P%d", i+1 );
+        insere(reg, nome, gerarAleatorio());
     }
     ordenar(*reg);
     imprimirInfluentes(*reg, 100);
-
 }
+/*
+Algoritmo buscarP(reg)
+{- Entrada: vetor reg cujos registros possuem os campos nome e
+  qtd_amigos 
+  Saída: impressão dos 100 primeiros registros do vetor reg ordenado
+  de forma decrescente pela quantidade de amigos-}
 
+    início
+        
+    fim
+*/
 int main()
 {
     srand(time(NULL));
     Registro *reg = NULL;
+    
     buscarP(&reg);
     return 0;
 }
