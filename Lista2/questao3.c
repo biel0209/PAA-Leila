@@ -39,27 +39,20 @@ void imprimirVetor(Registro *vet)
                         vet[i].ano, vet[i].qtd_casos);
     }
 }
-/*
-int buscarData(Registro *v) { 
-   int e = -1, d = TAM;
-   while (e < d-1) {  
-      int m = (e + d)/2;
-      if (v[m].qtd_casos > v[m-1].qtd_casos) e = m;
-      else d = m;          
-   }
-   return d;
-}
-*/
 
-int buscarData(Registro *reg, int esquerda, int direita)
+int buscarBinaria(Registro *reg, int esquerda, int direita)
 {
     if (direita < esquerda)
         return -1;
     int meio = (esquerda+direita)/2;
-    if (reg[meio].qtd_casos < reg[meio-1].qtd_casos)
-        return meio-1;
+    if (reg[meio].qtd_casos > reg[meio-1].qtd_casos && reg[meio].qtd_casos > reg[meio+1].qtd_casos )
+        return meio;
     else{
-        if(reg[meio].qtd_casos > reg[meio-1].qtd_caso)
+        if (reg[meio].qtd_casos < reg[meio-1].qtd_casos )
+            return buscarBinaria(reg, esquerda, meio-1);
+        else{
+            return buscarBinaria(reg, meio+1, direita);
+        }
     }
 }
 
@@ -69,10 +62,14 @@ int main()
     Registro reg[TAM];
     preencherVetor(reg);
     imprimirVetor(reg);
-    //int indice = buscarData(reg)-1;
-    int indice = buscarData(reg, -1, TAM);
+
+    int indice = buscarBinaria(reg, 1, TAM-1);
 
     printf("Dia com mais casos: %d/0%d/%d - Quantidade de casos: %d\n", 
-        reg[indice].dia, reg[indice].mes, reg[indice].ano, reg[indice].qtd_casos);    
+        reg[indice].dia, reg[indice].mes, reg[indice].ano, reg[indice].qtd_casos);  
     return 0;
 }
+
+
+ 
+
