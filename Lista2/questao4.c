@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<time.h>
+#include <time.h>
 #define TAM 10
 
 int gerarAleatorio(int inferior, int superior)
@@ -11,13 +11,13 @@ int gerarAleatorio(int inferior, int superior)
 
 void preencherVetor(int *vet)
 {
-    int intersecao = gerarAleatorio(0, TAM/2-1) + (int)TAM/2;
+    int intersecao = gerarAleatorio(0, (TAM/2)-1) + (int)TAM/2;
     int ultimo_gerado = 10;
     for (int i = 0; i < TAM; i++){
             if (i <= intersecao){
                 vet[i] = gerarAleatorio(ultimo_gerado, 100);
             }else{
-                vet[i]= __INT_MAX__ * (-1);
+                vet[i]= -1;
             }
             ultimo_gerado = vet[i];
     }
@@ -26,18 +26,31 @@ void preencherVetor(int *vet)
 void imprimirVetor(int *vet)
 {
     for (int i = 0; i < TAM; i++){
-        printf("%d\n", vet[i]); 
+        printf("Posicao: %d -- Chave: %d\n", i,vet[i]); 
     }
 }
 
-int buscarData(int *v) { 
-   int e = -1, d = TAM;
-   while (e < d-1) {  
-      int m = (e + d)/2;
-      if (v[m] > v[m-1]) e = m;
-      else d = m; 
-   }
-   return d;
+int buscaBinaria(int *v, int e, int d)
+{ 
+    int m = (e + d)/2;    
+    if (e > d) return -1;
+    if (v[m] > 0 && v[m+1] < 0) return m;
+    if (v[m] > 0)
+        return buscaBinaria(v,m+1,d);
+    else
+        return buscaBinaria(v,e,m-1);
+}
+
+int buscarLimites(int *vet)
+{   
+    int inferior=0, superior=1;
+    int val = vet[0];
+    while(val > 0){
+        inferior = superior;
+        superior = superior*2;
+        val = vet[superior];
+    }
+    return buscaBinaria(vet, inferior, superior);
 }
 
 int main()
@@ -46,6 +59,9 @@ int main()
     int reg[TAM];
     preencherVetor(reg);
     imprimirVetor(reg);
-    printf("%d\n", buscarData(reg));
+
+    int indice = buscarLimites(reg);
+    printf("Indice do último elemento válido: %d\n", indice);
+
     return 0;
 }
