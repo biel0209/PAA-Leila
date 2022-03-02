@@ -17,7 +17,7 @@ void preencherVetor(int *vet)
             if (i <= intersecao){
                 vet[i] = gerarAleatorio(ultimo_gerado, 100);
             }else{
-                vet[i]= -1;
+                vet[i]= (-1) * gerarAleatorio(1,100);
             }
             ultimo_gerado = vet[i];
     }
@@ -31,14 +31,17 @@ void imprimirVetor(int *vet)
 }
 
 int buscaBinaria(int *v, int e, int d)
-{ 
-    int m = (e + d)/2;    
+{    
     if (e > d) return -1;
+    int m = (e + d)/2;  
     if (v[m] > 0 && v[m+1] < 0) return m;
-    if (v[m] > 0)
-        return buscaBinaria(v,m+1,d);
-    else
-        return buscaBinaria(v,e,m-1);
+    else{
+        if (v[m] > 0)
+            return buscaBinaria(v,m+1,d);
+        else
+            return buscaBinaria(v,e,m-1);
+    }
+    
 }
 
 int buscarLimites(int *vet)
