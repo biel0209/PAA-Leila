@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define TAM 20
-#define LIM 8
+#define TAM 30
+#define LIM 10
 
 typedef struct registro{
     char nome[5];
@@ -95,6 +95,19 @@ int sortearPessoa(List *lista)
     return aux->conteudo;
 }
 
+int ignorarIguais(Registro *vet, int chave, List *listaAux)
+{
+    
+    if (listaAux){
+        vet[listaAux->conteudo].qtd_amigos = -1;
+        return ignorarIguais(vet, chave, listaAux->prox);
+    }else{
+        return 0;
+    }
+
+    
+}
+
 int maisInfluentes(Registro *reg, Registro *vet, int contador)
 {
     
@@ -102,13 +115,15 @@ int maisInfluentes(Registro *reg, Registro *vet, int contador)
         return -1;
     else{
         int indice = buscarMaior(reg, TAM-1, 0); 
-        if (contador >= 2){
+        if (contador >= 6){
             List *listaAux = NULL;
             listaAux = buscarIguais(reg, TAM-1, reg[indice].qtd_amigos, contador, listaAux);
             int sorteada = sortearPessoa(listaAux);
             strcpy(vet[contador].nome, reg[sorteada].nome);
             vet[contador].qtd_amigos = reg[sorteada].qtd_amigos;
             reg[sorteada].qtd_amigos = -1;
+            List *aux = listaAux;
+            int temp = ignorarIguais(reg, sorteada, aux);
             //imprimirLista(listaAux);
             //printf("%d\n",tamanhoLista);
         }else{
@@ -127,7 +142,7 @@ int maisInfluentes(Registro *reg, Registro *vet, int contador)
 
 int main()
 {
-    srand(time(NULL));
+    //srand(time(NULL));
     Registro reg[TAM];
     Registro influentes[LIM];
     preencherVetor(reg);
