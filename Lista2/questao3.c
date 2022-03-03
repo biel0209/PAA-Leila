@@ -42,8 +42,11 @@ void imprimirVetor(Registro *vet)
 
 int buscaBinaria(Registro *reg, int esquerda, int direita)
 {
+    if (direita == esquerda-1)
+        return 0;
     if (direita < esquerda)
         return -1;
+    
     int meio = (esquerda+direita)/2;
     if (reg[meio].qtd_casos > reg[meio-1].qtd_casos && reg[meio].qtd_casos > reg[meio+1].qtd_casos )
         return meio;
@@ -63,10 +66,13 @@ int main()
     preencherVetor(reg);
     imprimirVetor(reg);
 
-    int indice = buscaBinaria(reg, 1, TAM);
-
-    printf("Dia com mais casos: %d/0%d/%d - Quantidade de casos: %d\n", 
-        reg[indice].dia, reg[indice].mes, reg[indice].ano, reg[indice].qtd_casos);  
+    int indice = buscaBinaria(reg, 1, TAM-1);
+    if(indice == -1)
+        printf("Vetor vazio\n"); 
+    else{
+        printf("Dia com mais casos: %d/0%d/%d - Quantidade de casos: %d\n", 
+            reg[indice].dia, reg[indice].mes, reg[indice].ano, reg[indice].qtd_casos);  
+    }
     return 0;
 }
 
