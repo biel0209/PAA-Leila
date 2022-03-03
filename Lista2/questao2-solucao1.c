@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define TAM 10
-#define LIM 5
+#define TAM 500
+#define LIM 100
 
 typedef struct registro{
     char nome[5];
@@ -79,29 +79,18 @@ int ignorarIguais(Registro *vet, int contador, int indice)
     }
 }
 
-int maisInfluentes(Registro *reg, Registro *vet, int contador, int contador2)
+int maisInfluentes(Registro *reg, Registro *vet, int contador)
 {
     if(contador==LIM)
         return -1;
     else{
         if(contador==0)
             bubbleSort(reg);
-        if(contador>=3 && reg[contador].qtd_amigos == reg[contador+1].qtd_amigos){
-            int indice = buscarIguais(reg, TAM-1, reg[contador2].qtd_amigos, contador, -1);
-            int sorteado = gerarAleatorio(contador, indice);
-            strcpy(vet[contador].nome, reg[sorteado].nome);
-            vet[contador].qtd_amigos = reg[sorteado].qtd_amigos;
-            //int temp = ignorarIguais(reg, contador, indice);
-            contador2 = indice+1; 
-            
-        }else{
-            strcpy(vet[contador].nome, reg[contador].nome);
-            vet[contador].qtd_amigos = reg[contador].qtd_amigos;
-            contador2++;
-        }
-        contador++;
-        return maisInfluentes(reg, vet, contador, contador2);
+        strcpy(vet[contador].nome, reg[contador].nome);
+        vet[contador].qtd_amigos = reg[contador].qtd_amigos;
     }
+    contador++;
+    return maisInfluentes(reg, vet, contador);
 }
 
 
@@ -111,11 +100,9 @@ int main()
     Registro reg[TAM];
     Registro influentes[LIM];
     preencherVetor(reg);
-    
-    imprimirVetor(reg, TAM);
-    printf("\n\n");
-    maisInfluentes(reg, influentes,0,0);
-    
+    //imprimirVetor(reg, TAM);
+    //printf("\n\n");
+    maisInfluentes(reg, influentes,0);
     imprimirVetor(influentes, LIM);
     return 0;
 }
