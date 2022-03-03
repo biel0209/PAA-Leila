@@ -72,7 +72,7 @@ int buscarMaior(Registro *vet, int n, int indice)
 
 int tamanhoLista=0;
 
-List* buscarIguais(Registro *vet, int n, int chave, int contador, List *listaAux)
+List* buscarIguais(Registro *vet, int n, int chave, List *listaAux)
 {
     if (n < 0)
         return listaAux;
@@ -80,7 +80,7 @@ List* buscarIguais(Registro *vet, int n, int chave, int contador, List *listaAux
         insere(&listaAux, n);
         tamanhoLista++;
     }
-    return buscarIguais(vet, n-1, chave, contador, listaAux);
+    return buscarIguais(vet, n-1, chave, listaAux);
 }
 
 int sortearPessoa(List *lista)
@@ -113,7 +113,7 @@ int maisInfluentes(Registro *reg, Registro *vet, int contador)
         int indice = buscarMaior(reg, TAM-1, 0); 
         if (contador >= 90){
             List *listaAux = NULL;
-            listaAux = buscarIguais(reg, TAM-1, reg[indice].qtd_amigos, contador, listaAux);
+            listaAux = buscarIguais(reg, TAM-1, reg[indice].qtd_amigos, listaAux);
             int sorteada = sortearPessoa(listaAux);
             strcpy(vet[contador].nome, reg[sorteada].nome);
             vet[contador].qtd_amigos = reg[sorteada].qtd_amigos;
