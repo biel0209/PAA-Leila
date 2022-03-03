@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define TAM 30
-#define LIM 10
+#define TAM 500
+#define LIM 100
 
 typedef struct registro{
     char nome[5];
@@ -38,16 +38,6 @@ void imprimirVetor(Registro *vet, int n)
     }
 }
 
-void insere(List **lista, int valor)
-{
-    List *novo = malloc(sizeof(List));
-    if(novo){
-        novo->conteudo = valor;
-        novo->prox = *lista;
-        *lista = novo;
-    }
-}
-
 void imprimirLista(List *lista)
 {
     List *aux = lista;
@@ -57,6 +47,16 @@ void imprimirLista(List *lista)
     }
     printf("\n");
 
+}
+
+void insere(List **lista, int valor)
+{
+    List *novo = malloc(sizeof(List));
+    if(novo){
+        novo->conteudo = valor;
+        novo->prox = *lista;
+        *lista = novo;
+    }
 }
 
 int buscarMaior(Registro *vet, int n, int indice)
@@ -95,27 +95,23 @@ int sortearPessoa(List *lista)
     return aux->conteudo;
 }
 
-int ignorarIguais(Registro *vet, int chave, List *listaAux)
+int ignorarIguais(Registro *vet, List *listaAux)
 {
-    
     if (listaAux){
         vet[listaAux->conteudo].qtd_amigos = -1;
-        return ignorarIguais(vet, chave, listaAux->prox);
+        return ignorarIguais(vet, listaAux->prox);
     }else{
         return 0;
     }
-
-    
 }
 
 int maisInfluentes(Registro *reg, Registro *vet, int contador)
 {
-    
     if (contador == LIM)
         return -1;
     else{
         int indice = buscarMaior(reg, TAM-1, 0); 
-        if (contador >= 6){
+        if (contador >= 90){
             List *listaAux = NULL;
             listaAux = buscarIguais(reg, TAM-1, reg[indice].qtd_amigos, contador, listaAux);
             int sorteada = sortearPessoa(listaAux);
@@ -123,26 +119,21 @@ int maisInfluentes(Registro *reg, Registro *vet, int contador)
             vet[contador].qtd_amigos = reg[sorteada].qtd_amigos;
             reg[sorteada].qtd_amigos = -1;
             List *aux = listaAux;
-            int temp = ignorarIguais(reg, sorteada, aux);
-            //imprimirLista(listaAux);
-            //printf("%d\n",tamanhoLista);
+            int temp = ignorarIguais(reg, aux);
         }else{
             strcpy(vet[contador].nome, reg[indice].nome);
             vet[contador].qtd_amigos = reg[indice].qtd_amigos;
             reg[indice].qtd_amigos = -1;
-            
-            //printf("indice do maior: %d\n",indice);
         }
         contador++;
         tamanhoLista=0;
-        
         return maisInfluentes(reg, vet, contador);
     }
 }
 
 int main()
 {
-    //srand(time(NULL));
+    srand(time(NULL));
     Registro reg[TAM];
     Registro influentes[LIM];
     preencherVetor(reg);
