@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define TAM 8
+#define TAM 11
 
 typedef struct registro{
     char cpf[12], nome[6], genero;
@@ -78,24 +78,32 @@ void trocar(Registro *vet, int maior, int i)
 
 void maxHeapify(Registro *vet, int n, int i)
 {
-    int maior;
-    int esq = 2*i, dir = 2*i + 1;
-    if (esq <= n && vet[esq].idade > vet[i].idade)
+    int maior = i;
+    int esq = 2*i;
+    int dir = (2*i)+1;
+    if (esq < n && vet[esq].idade > vet[i].idade)
         maior = esq;
-    else
-        maior = i;
-    if (dir <= n && vet[dir].idade > vet[maior].idade)
+    if (dir < n && vet[dir].idade > vet[maior].idade)
         maior = dir;
     if (maior != i){
-        trocar(vet, maior, i);  //trocar A[i] com A[maior]
+        trocar(vet, maior, i);  
         maxHeapify(vet, n, maior);
     }
 }
 
 void montaMaxHeap(Registro *vet, int n)
 {
-    for(int i = n/2; i>=0; i--){
+    for(int i = n/2 - 1; i>=0; i--){
         maxHeapify(vet, n, i);
+    }
+}
+
+void heapSort(Registro *vet, int n)
+{
+    montaMaxHeap(vet, n);
+    for (int i=n-1; i>=0; i--){
+        trocar(vet, 0, i);
+        maxHeapify(vet, i, 0);
     }
 }
 
@@ -105,7 +113,7 @@ int main()
     Registro reg[TAM];
     preencherVetor(reg);
     imprimirVetor(reg);
-    montaMaxHeap(reg, TAM);
+    heapSort(reg, TAM);
     printf("-----HEAP-----\n");
     imprimirVetor(reg);
     return 0;
