@@ -16,7 +16,11 @@ int gerarAleatorio(int inferior, int superior)
 
 char* gerarCpf()
 {
-    
+    char *aux = malloc(11*sizeof(char));
+    for (int i = 0; i < 11; i++){
+        aux[i] = '1';
+    }
+    return aux;
 }
 
 int gerarGenero()
@@ -32,9 +36,10 @@ int gerarGenero()
 void preencherVetor(Registro *vet)
 {
     char auxNome[5];
-    char auxCpf[11];
     for (int i = 0; i < TAM; i++){
+        auxCpf = gerarCpf();
         strcpy(vet[i].cpf, gerarCpf());
+        //printf("%s\n",auxCpf)
         snprintf(auxNome, 5, "P%d", i+1);
         strcpy(vet[i].nome, auxNome);
         vet[i].genero = gerarGenero();
@@ -45,13 +50,11 @@ void preencherVetor(Registro *vet)
 void imprimirVetor(Registro *vet)
 {
     for (int i = 0; i < TAM; i++){
-        printf("i: %d Nome: %s CPF: %s Genero: %c Idade: %d\n", 
+        printf("i: %d\tNome: %s\tCPF: %s\tGenero: %c\tIdade: %d\n", 
                         i, vet[i].nome, vet[i].cpf,
                         vet[i].genero, vet[i].idade);
     }
 }
-
-
 
 int main()
 {
