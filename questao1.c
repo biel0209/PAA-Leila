@@ -49,8 +49,8 @@ void preencherVetor(Registro *vet)
 void imprimirVetor(Registro *vet)
 {
     for (int i = 0; i < TAM; i++){
-        printf("Nome: %s\ti: %d\tCPF: %s\tGenero: %c\tIdade: %d\n", 
-                        vet[i].nome, i, vet[i].cpf,
+        printf("CPF: %s\tNome: %s\ti: %d\tGenero: %c\tIdade: %d\n", 
+                        vet[i].cpf, vet[i].nome, i, 
                         vet[i].genero, vet[i].idade);
     }
 }
@@ -60,7 +60,9 @@ int main()
     srand(time(NULL));
     Registro reg[TAM];
     preencherVetor(reg);
+    printf("%s\n",reg[0].cpf);
     imprimirVetor(reg);
+    
     return 0;
 }
 
