@@ -19,25 +19,35 @@ char* gerarCpf()
     
 }
 
+int gerarGenero()
+{
+    char c;
+    int aux = gerarAleatorio(1,3);
+    if(aux == 1) c = 'F';
+    else if (aux == 2) c = 'M';
+    else c = 'X';
+    return c;
+}
+
 void preencherVetor(Registro *vet)
 {
     char auxNome[5];
     char auxCpf[11];
     for (int i = 0; i < TAM; i++){
-            strcpy(vet[i].cpf, gerarCpf());
-            snprintf(auxNome, 5, "P%d", i+1);
-            strcpy(vet[i].nome, auxNome);
-            vet[i].genero = i+1;
-            vet[i].idade = gerarAleatorio(1, 80);
+        strcpy(vet[i].cpf, gerarCpf());
+        snprintf(auxNome, 5, "P%d", i+1);
+        strcpy(vet[i].nome, auxNome);
+        vet[i].genero = gerarGenero();
+        vet[i].idade = gerarAleatorio(1, 80);
     }
 }
 
 void imprimirVetor(Registro *vet)
 {
     for (int i = 0; i < TAM; i++){
-        printf("%d/0%d/%d - Quantidade de casos: %d\n", 
-                        vet[i].dia, vet[i].mes, 
-                        vet[i].ano, vet[i].qtd_casos);
+        printf("i: %d Nome: %s CPF: %s Genero: %c Idade: %d\n", 
+                        i, vet[i].nome, vet[i].cpf,
+                        vet[i].genero, vet[i].idade);
     }
 }
 
