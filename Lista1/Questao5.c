@@ -7,7 +7,7 @@ typedef struct no {
     struct no *esq, *dir;
 } No;
 
-No* inserir(No *raiz, int valor) {
+No* inserir(No *raiz, int valor){
     if(raiz == NULL) {
         No *novo = (No*)malloc(sizeof(No));
         novo->conteudo = valor;
