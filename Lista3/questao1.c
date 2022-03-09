@@ -114,7 +114,7 @@ void montaMinHeap(Registro *vet, int n)
 void heapSort(Registro *vet, int n)
 {
     montaMinHeap(vet, n);
-    for (int i=n-1; i>=0; i--){
+    for (int i=n-1; i>=1; i--){
         trocar(vet, 0, i);
         minHeapify(vet, i, 0);
     }
