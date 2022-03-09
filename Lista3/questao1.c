@@ -55,24 +55,24 @@ void imprimirVetor(Registro *vet)
     }
 }
 
-void trocar(Registro *vet, int menor, int i)
+void trocar(Registro *vet, int a, int b)
 {
     Registro aux;
     
-    strcpy(aux.cpf, vet[i].cpf);
-    aux.genero = vet[i].genero;
-    aux.idade = vet[i].idade;
-    strcpy(aux.nome, vet[i].nome);
+    strcpy(aux.cpf, vet[b].cpf);
+    aux.genero = vet[b].genero;
+    aux.idade = vet[b].idade;
+    strcpy(aux.nome, vet[b].nome);
 
-    strcpy(vet[i].cpf, vet[menor].cpf);
-    vet[i].genero = vet[menor].genero;
-    vet[i].idade = vet[menor].idade;
-    strcpy(vet[i].nome, vet[menor].nome);
+    strcpy(vet[b].cpf, vet[a].cpf);
+    vet[b].genero = vet[a].genero;
+    vet[b].idade = vet[a].idade;
+    strcpy(vet[b].nome, vet[a].nome);
 
-    strcpy(vet[menor].cpf, aux.cpf);
-    vet[menor].genero = aux.genero;
-    vet[menor].idade = aux.idade;
-    strcpy(vet[menor].nome, aux.nome);
+    strcpy(vet[a].cpf, aux.cpf);
+    vet[a].genero = aux.genero;
+    vet[a].idade = aux.idade;
+    strcpy(vet[a].nome, aux.nome);
 }
 
 void minHeapify(Registro *vet, int n, int i)
