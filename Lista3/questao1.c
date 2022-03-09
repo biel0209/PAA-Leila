@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define TAM 11
+#define TAM 50
 
 typedef struct registro{
     char cpf[12], nome[6], genero;
@@ -75,16 +75,29 @@ void trocar(Registro *vet, int maior, int i)
     strcpy(vet[maior].nome, aux.nome);
 }
 
-
 void maxHeapify(Registro *vet, int n, int i)
 {
     int maior = i;
     int esq = 2*i;
     int dir = (2*i)+1;
-    if (esq < n && vet[esq].idade > vet[i].idade)
-        maior = esq;
-    if (dir < n && vet[dir].idade > vet[maior].idade)
-        maior = dir;
+    if (esq < n){
+        if(vet[esq].idade > vet[i].idade)
+            maior = esq;
+        else if(vet[esq].idade == vet[i].idade){
+            if( (int) (vet[esq].genero) < (int) (vet[i].genero))
+                maior = esq;
+        }
+    }
+
+    if (dir < n){
+        if(vet[dir].idade > vet[maior].idade)
+            maior = dir;
+        else if(vet[dir].idade == vet[maior].idade){
+            if( (int) (vet[dir].genero) < (int) (vet[maior].genero))
+                maior = dir;
+        }
+    }
+   
     if (maior != i){
         trocar(vet, maior, i);  
         maxHeapify(vet, n, maior);
@@ -112,7 +125,33 @@ int main()
     srand(time(NULL));
     Registro reg[TAM];
     preencherVetor(reg);
-    imprimirVetor(reg);
+    /*
+    strcpy(reg[0].nome, "P1");
+    strcpy(reg[0].cpf, "36753562912");
+    reg[0].idade = 52;
+    reg[0].genero = 'M';
+
+    strcpy(reg[1].nome, "P2");
+    strcpy(reg[1].cpf, "93606261879");
+    reg[1].idade = 52;
+    reg[1].genero = 'X';
+    
+    strcpy(reg[2].nome, "P3");
+    strcpy(reg[2].cpf, "23759228973");
+    reg[2].idade = 112;
+    reg[2].genero = 'M';
+
+    strcpy(reg[3].nome, "P4");
+    strcpy(reg[3].cpf, "29319478450");
+    reg[3].idade = 52;
+    reg[3].genero = 'F';
+
+    strcpy(reg[4].nome, "P5");
+    strcpy(reg[4].cpf, "29119478450");
+    reg[4].idade = 45;
+    reg[4].genero = 'X';
+    */
+    
     heapSort(reg, TAM);
     printf("-----HEAP-----\n");
     imprimirVetor(reg);
