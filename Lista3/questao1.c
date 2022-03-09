@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define TAM 50
+#define TAM 10
 
 typedef struct registro{
     char cpf[12], nome[6], genero;
