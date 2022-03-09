@@ -83,8 +83,8 @@ void minHeapify(Registro *vet, int n, int i)
     if (esq < n){
         if(vet[esq].idade < vet[i].idade)
             menor = esq;
-        else if(vet[esq].idade == vet[i].idade){
-            if( (int) (vet[esq].genero) > (int) (vet[i].genero))
+        if(vet[esq].idade == vet[i].idade &&
+            (int) (vet[esq].genero) > (int) (vet[i].genero) ){
                 menor = esq;
         }
     }
@@ -92,8 +92,8 @@ void minHeapify(Registro *vet, int n, int i)
     if (dir < n){
         if(vet[dir].idade < vet[menor].idade)
             menor = dir;
-        else if(vet[dir].idade == vet[menor].idade){
-            if( (int) (vet[dir].genero) > (int) (vet[menor].genero))
+        if(vet[dir].idade == vet[menor].idade &&
+            (int) (vet[dir].genero) > (int) (vet[menor].genero)){
                 menor = dir;
         }
     }
