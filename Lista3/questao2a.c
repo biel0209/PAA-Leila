@@ -89,7 +89,7 @@ void buscarMenor(int *vet, int n)
         if(vet[iMenor] > vet[i])
             iMenor = i;
     }
-    removeMaxHeap(vet, TAM, iMenor);
+    removeMaxHeap(vet, n, iMenor);
 }
 
 
