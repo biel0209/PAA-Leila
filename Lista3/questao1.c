@@ -78,8 +78,8 @@ void trocar(Registro *vet, int a, int b)
 void minHeapify(Registro *vet, int n, int i)
 {
     int menor = i;
-    int esq = 2*i;
-    int dir = (2*i)+1;
+    int esq = (2*i)+1;
+    int dir = (2*i)+2;
     if (esq < n){
         if(vet[esq].idade < vet[i].idade)
             menor = esq;
