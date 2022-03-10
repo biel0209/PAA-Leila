@@ -56,9 +56,9 @@ void montaMaxHeap(int *vet, int n)
     }
 }
 
-void rearranjeMaxHeap(int *vet, int n)
+void rearranjeMaxHeap(int *vet, int n, int k)
 {
-    int pai = 0, filho = 1;
+    int pai = k, filho = k+1;
     while(filho <= n-1){
         if(vet[filho] < vet[filho+1]) filho++;
         if(vet[filho] > vet[pai]){
@@ -78,7 +78,7 @@ void removeMaxHeap(int *vet, int n, int k)
     else{
         trocar(vet, k, n-1);
         n--;
-        rearranjeMaxHeap(vet, n);
+        rearranjeMaxHeap(vet, n, k);
     }
 }
 
@@ -89,7 +89,7 @@ void removerArbitrario(int *vet, int n, int chave)
         if(vet[i] == chave)
             k = i;
     }
-    printf("\nElemento arbitrario: %d Indice: %d\n", vet[k], k);
+    printf("\nElemento arbitrario: %d Indice: %d\n", vet[k], k+1);
     removeMaxHeap(vet, TAM, k);
 }
 
