@@ -71,21 +71,31 @@ void rearranjeMaxHeap(int *vet, int n)
     }
 }
 
-void removeMaxHeap(int *vet, int n)
+void removeMaxHeap(int *vet, int n, int k)
 {
     if (n==0)
         printf("heap vazio!");
     else{
-        trocar(vet, 0, n-1);
+        trocar(vet, k, n-1);
         n--;
         rearranjeMaxHeap(vet, n);
     }
 }
 
+void buscarMenor(int *vet, int n)
+{
+    int iMenor = 0;
+    for(int i = n/2; i<n; i++){
+        if(vet[iMenor] > vet[i])
+            iMenor = i;
+    }
+    removeMaxHeap(vet, TAM, iMenor);
+}
+
 
 int main()
 {
-    //srand(time(NULL));
+    srand(time(NULL));
     int reg[TAM];
     preencherVetor(reg);
     montaMaxHeap(reg, TAM);
@@ -93,7 +103,7 @@ int main()
     imprimirVetor(reg, TAM);
     
     printf("-----REMOCAO-----\n");
-    removeMaxHeap(reg, TAM);
+    buscarMenor(reg, TAM);
     imprimirVetor(reg, TAM-1);
     return 0;
 }
