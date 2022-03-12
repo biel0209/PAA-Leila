@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define  QTD_L 5 //quantidade de lojas
-#define QTD_C 5 //quantidade de clientes por loja
+#define M 3 //quantidade de lojas
+#define N 3 //quantidade de clientes por loja
 
 typedef struct data{
     int dia, mes, ano;
@@ -12,6 +12,7 @@ typedef struct data{
 typedef struct registro{
     long cpf, telefone;             
     char nome[15], email[45];
+    int i, j;
     Data data_nascimento;  
 }Registro;
 
@@ -33,34 +34,47 @@ long gerarCpf()
     return atol(aux);
 }
 
-void preencherVetor(Registro vet[][QTD_C])
+void preencherVetor(Registro mat[][N])
 {
     char auxNome[15], auxEmail[45];
-    for (int i = 0; i < QTD_L; i++){
-        for(int j = 0; j < QTD_C; j++){
+    for (int i = 0; i < M; i++){
+        for(int j = 0; j < N; j++){
             snprintf(auxNome, 15, "P%d%d", i+1,j+1);
-            strcpy(vet[i][j].nome, auxNome);
+            strcpy(mat[i][j].nome, auxNome);
             snprintf(auxEmail, 45, "P%d%d@example.com", i+1, j+1);
-            strcpy(vet[i][j].email, auxEmail);
-            vet[i][j].cpf = gerarCpf();
-            vet[i][j].telefone = gerarAleatorio(100000000, 899999999);
-            vet[i][j].data_nascimento.dia = gerarAleatorio(1, 30);
-            vet[i][j].data_nascimento.mes = gerarAleatorio(1, 12);
-            vet[i][j].data_nascimento.ano = gerarAleatorio(1950, 54);
+            strcpy(mat[i][j].email, auxEmail);
+            mat[i][j].cpf = gerarCpf();
+            mat[i][j].telefone = gerarAleatorio(100000000, 899999999);
+            mat[i][j].data_nascimento.dia = gerarAleatorio(1, 30);
+            mat[i][j].data_nascimento.mes = gerarAleatorio(1, 12);
+            mat[i][j].data_nascimento.ano = gerarAleatorio(1950, 54);
+            mat[i][j].i = i;
+            mat[i][j].j = j;
         }
     }
 }
 
-void imprimirVetor(Registro vet[][QTD_C])
+void imprimirMatriz(Registro mat[][N])
 {
-    for (int i = 0; i < QTD_L; i++){
+    for (int i = 0; i < M; i++){
         printf("-----Loja %d-----\n", i+1);
-        for(int j = 0; j < QTD_C; j++){
+        for(int j = 0; j < N; j++){
             printf("CPF: %ld\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\n", 
-                        vet[i][j].cpf, vet[i][j].nome, vet[i][j].data_nascimento.dia,
-                        vet[i][j].data_nascimento.mes, vet[i][j].data_nascimento.ano,
-                        vet[i][j].email, vet[i][j].telefone);
+                        mat[i][j].cpf, mat[i][j].nome, mat[i][j].data_nascimento.dia,
+                        mat[i][j].data_nascimento.mes, mat[i][j].data_nascimento.ano,
+                        mat[i][j].email, mat[i][j].telefone);
         }
+    }
+}
+
+void imprimirVetor(Registro *vet, int n)
+{
+    for (int i = 0; i < n; i++){
+        printf("CPF: %ld\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\n", 
+                    vet[i].cpf, vet[i].nome, vet[i].data_nascimento.dia,
+                    vet[i].data_nascimento.mes, vet[i].data_nascimento.ano,
+                    vet[i].email, vet[i].telefone);
+        
     }
 }
 
@@ -75,6 +89,8 @@ void trocar(Registro *vet, int a, int b)
     aux.data_nascimento.dia = vet[b].data_nascimento.dia;
     aux.data_nascimento.mes = vet[b].data_nascimento.mes;
     aux.data_nascimento.ano = vet[b].data_nascimento.ano;
+    aux.i = vet[b].i;
+    aux.j = vet[b].j;
 
     strcpy(vet[b].email, vet[a].email);
     vet[b].cpf = vet[a].cpf;
@@ -83,6 +99,8 @@ void trocar(Registro *vet, int a, int b)
     vet[b].data_nascimento.dia = vet[a].data_nascimento.dia;
     vet[b].data_nascimento.mes = vet[a].data_nascimento.mes;
     vet[b].data_nascimento.ano = vet[a].data_nascimento.ano;
+    vet[b].i = vet[a].i;
+    vet[b].j = vet[a].j;
 
     strcpy(vet[a].email, aux.email);
     vet[a].cpf = aux.cpf;
@@ -91,6 +109,42 @@ void trocar(Registro *vet, int a, int b)
     vet[a].data_nascimento.dia = aux.data_nascimento.dia;
     vet[a].data_nascimento.mes = aux.data_nascimento.mes;
     vet[a].data_nascimento.ano = aux.data_nascimento.ano;
+    vet[a].i = aux.i;
+    vet[a].j = aux.j;
+}
+
+void maxHeapify(Registro *vet, int n, int i)
+{
+    int maior = i;
+    int esq = (2*i)+1;
+    int dir = (2*i)+2;
+    if (esq < n && vet[esq].cpf > vet[i].cpf)
+        maior = esq;
+    
+    if (dir < n && vet[dir].cpf > vet[maior].cpf)
+        maior = dir;
+   
+    if (maior != i){
+        trocar(vet, maior, i);  
+        maxHeapify(vet, n, maior);
+    }
+}
+
+
+void montaMaxHeap(Registro *vet, int n)
+{
+    for(int i = n/2 - 1; i>=0; i--){
+        maxHeapify(vet, n, i);
+    }
+}
+
+void heapSortMax(Registro *vet, int n)
+{
+    montaMaxHeap(vet, n);
+    for (int i=n-1; i>=1; i--){
+        trocar(vet, 0, i);
+        maxHeapify(vet, i, 0);
+    }
 }
 
 void minHeapify(Registro *vet, int n, int i)
@@ -110,6 +164,7 @@ void minHeapify(Registro *vet, int n, int i)
     }
 }
 
+
 void montaMinHeap(Registro *vet, int n)
 {
     for(int i = n/2 - 1; i>=0; i--){
@@ -117,7 +172,7 @@ void montaMinHeap(Registro *vet, int n)
     }
 }
 
-void heapSort(Registro *vet, int n)
+void heapSortMin(Registro *vet, int n)
 {
     montaMinHeap(vet, n);
     for (int i=n-1; i>=1; i--){
@@ -126,20 +181,94 @@ void heapSort(Registro *vet, int n)
     }
 }
 
-void ordenarVetores(Registro vet[QTD_L][QTD_C])
+void ordenarVetores(Registro mat[M][N])
 {
-    for (int i=0; i<QTD_L; i++){
-        heapSort(vet[i], QTD_C);
+    for (int i=0; i<M; i++){
+        heapSortMax(mat[i], N);
+    }
+}
+
+void rearranjeMinHeap(Registro *vet, int n)
+{
+    int pai = 0, filho = 1;
+    while(filho <= n-1){
+        if(vet[filho].cpf > vet[filho+1].cpf) filho++;
+        if(vet[filho].cpf < vet[pai].cpf){
+            trocar(vet, filho, pai);
+            pai = filho;
+            filho = 2*filho;
+        }else{
+            filho = n;
+        }
+    }
+}
+
+void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int n)
+{
+    int tamV = m*n; //tamanho que o vetor final terá
+    for (int i=0; i<m; i++){
+        strcpy(heap[i].email, mat[i][0].email);
+        heap[i].cpf = mat[i][0].cpf;
+        heap[i].telefone = mat[i][0].telefone;
+        strcpy(heap[i].nome, mat[i][0].nome);
+        heap[i].data_nascimento.dia = mat[i][0].data_nascimento.dia;
+        heap[i].data_nascimento.mes = mat[i][0].data_nascimento.mes;
+        heap[i].data_nascimento.ano = mat[i][0].data_nascimento.ano;
+        heap[i].i = mat[i][0].i;
+        heap[i].j = mat[i][0].j;
+    }
+    montaMinHeap(heap, M);
+    int cont=0;
+    for (int i=0; i<tamV; i++){ 
+        strcpy(vetFinal[i].email, heap[0+cont].email);
+        vetFinal[i].cpf = heap[0+cont].cpf;
+        vetFinal[i].telefone = heap[0+cont].telefone;
+        strcpy(vetFinal[i].nome, heap[0+cont].nome);
+        vetFinal[i].data_nascimento.dia = heap[0+cont].data_nascimento.dia;
+        vetFinal[i].data_nascimento.mes = heap[0+cont].data_nascimento.mes;
+        vetFinal[i].data_nascimento.ano = heap[0+cont].data_nascimento.ano;
+        vetFinal[i].i = heap[0+cont].i;
+        vetFinal[i].j = heap[0+cont].j;
+
+        if(heap[0].j  < n-1){
+            strcpy(heap[0+cont].email, mat[heap[0+cont].i][heap[0+cont].j + 1].email);
+            heap[0+cont].cpf = mat[heap[0+cont].i][heap[0+cont].j + 1].cpf;
+            heap[0+cont].telefone = mat[heap[0+cont].i][heap[0+cont].j + 1].telefone;
+            strcpy(heap[0+cont].nome, mat[heap[0+cont].i][heap[0+cont].j + 1].nome);
+            heap[0+cont].data_nascimento.dia = mat[heap[0+cont].i][heap[0+cont].j + 1].data_nascimento.dia;
+            heap[0+cont].data_nascimento.mes = mat[heap[0+cont].i][heap[0+cont].j + 1].data_nascimento.mes;
+            heap[0+cont].data_nascimento.ano = mat[heap[0+cont].i][heap[0+cont].j + 1].data_nascimento.ano;
+            heap[0+cont].i = mat[heap[0+cont].i][heap[0+cont].j + 1].i;    
+            heap[0+cont].j = mat[heap[0+cont].i][heap[0+cont].j + 1].j;
+        }else{
+            //trocar(heap, 0, m-1);
+            //m--;
+            //cont++;
+            heap[0].cpf = 99999999999;
+        }
+
+        //minHeapify(heap, m, 0);
+        //montaMinHeap(heap, M);
+        rearranjeMinHeap(heap, m);
+
     }
 }
 
 int main()
 {
-    srand(time(NULL));
-    Registro vet[QTD_L][QTD_C];
-    preencherVetor(vet);
-    ordenarVetores(vet);
-    imprimirVetor(vet);
+    //srand(time(NULL));
+    Registro mat[M][N];
+    Registro heap[M];
+    Registro vetFinal[M*N];
+    preencherVetor(mat);
+    ordenarVetores(mat);
+    imprimirMatriz(mat);
+    kWayMerge(mat, heap, vetFinal, M, N);
+    
+    printf("-----Vetor min heap-----\n");
+    imprimirVetor(heap, M);
+    printf("-----Vetor ordenado-----\n");
+    imprimirVetor(vetFinal,  M*N);
     return 0;
 }
 
