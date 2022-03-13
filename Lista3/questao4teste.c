@@ -10,6 +10,21 @@ typedef struct registro{
     long chave;
 }Registro;
 
+int gerarAleatorio(int inferior, int superior)
+{
+    return inferior + rand() % superior;
+}
+
+
+void preencherVetor(Registro mat[][N])
+{
+    for (int i = 0; i < M; i++){
+        for(int j = 0; j < N; j++){
+            mat[i][j].chave = gerarAleatorio(1, 1000);
+        }
+    }
+}
+
 void trocar(Registro *vet, int a, int b)
 {
     Registro aux;
@@ -100,44 +115,87 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
     
     int cont=0;
     for (int i=0; i<tamV; i++){ 
-        printf("-----heap min-----\n");
-        imprimirVetor(heap, M);
+        //printf("-----heap min-----\n");
+        //imprimirVetor(heap, M);
         vetFinal[i].i = heap[0+cont].i;
         vetFinal[i].j = heap[0+cont].j;
         vetFinal[i].chave = heap[0+cont].chave;
 
         if(heap[0].j  < n-1){
-            heap[0+cont].i = mat[heap[0+cont].i][heap[0+cont].j + 1].i;    
-            heap[0+cont].chave = mat[heap[0+cont].i][heap[0+cont].j + 1].chave;
-            heap[0+cont].j = mat[heap[0+cont].i][heap[0+cont].j + 1].j;
+            int auxI = heap[0+cont].i;
+            int auxJ = heap[0+cont].j;
+            heap[0+cont].i = mat[auxI][auxJ + 1].i;    
+            heap[0+cont].chave = mat[auxI][auxJ + 1].chave;
+            heap[0+cont].j = mat[auxI][auxJ + 1].j;
 
         }else{
             //trocar(heap, 0, m-1);
             //m--;
             //cont++;
-            heap[0].chave = 99999999999;
+            heap[0].chave = 9999;
         }
+        minHeapify(heap, m, 0);
+    }
+}
 
-        //minHeapify(heap, m, 0);
-        //montaMinHeap(heap, M);
-        rearranjeMinHeap(heap, m);
+void maxHeapify(Registro *vet, int n, int i)
+{
+    int maior = i;
+    int esq = (2*i)+1;
+    int dir = (2*i)+2;
+    if (esq < n && vet[esq].chave > vet[i].chave)
+        maior = esq;
+    
+    if (dir < n && vet[dir].chave > vet[maior].chave)
+        maior = dir;
+   
+    if (maior != i){
+        trocar(vet, maior, i);  
+        maxHeapify(vet, n, maior);
+    }
+}
 
 
+void montaMaxHeap(Registro *vet, int n)
+{
+    for(int i = n/2 - 1; i>=0; i--){
+        maxHeapify(vet, n, i);
+    }
+}
+
+void heapSortMax(Registro *vet, int n)
+{
+    montaMaxHeap(vet, n);
+    for (int i=n-1; i>=1; i--){
+        trocar(vet, 0, i);
+        maxHeapify(vet, i, 0);
+    }
+}
+
+void ordenarVetores(Registro mat[M][N])
+{
+    for (int i=0; i<M; i++){
+        heapSortMax(mat[i], N);
+    }
+    for (int i = 0; i < M; i++){
+        for(int j = 0; j < N; j++){
+            mat[i][j].i = i;
+            mat[i][j].j = j;
+        }
     }
 }
 
 int main()
 {
     Registro mat[M][N];
-    mat[0][0].i = 0; mat[0][0].j = 0; mat[0][0].chave = 27075713615; /**/ mat[0][1].i = 0; mat[0][1].j = 1; mat[0][1].chave = 56071886688; /**/ mat[0][2].i = 0; mat[0][2].j = 2; mat[0][2].chave = 60035317476;
-    mat[1][0].i = 1; mat[1][0].j = 0; mat[1][0].chave = 55223211880; /**/ mat[1][1].i = 1; mat[1][1].j = 1; mat[1][1].chave = 70562873420; /**/ mat[1][2].i = 1; mat[1][2].j = 2; mat[1][2].chave = 72565766853;
-    mat[2][0].i = 2; mat[2][0].j = 0; mat[2][0].chave = 45260727281; /**/ mat[2][1].i = 2; mat[2][1].j = 1; mat[2][1].chave = 56046232043; /**/ mat[2][2].i = 2; mat[2][2].j = 2; mat[2][2].chave = 76801170320;
-
-
+ 
+    srand(time(NULL));
 
     Registro heap[M];
     Registro vetFinal[M*N];
-    
+
+    preencherVetor(mat);
+    ordenarVetores(mat);
     imprimirMatriz(mat);
     kWayMerge(mat, heap, vetFinal, M, N);
     
