@@ -26,9 +26,9 @@ int gerarAleatorio(int inferior, int superior)
 
 long gerarCpf()
 {
-    char *aux = malloc(11*sizeof(char));
+    char *aux = malloc(4*sizeof(char));
     char *ptr;
-    for (int i = 0; i < 11; i++){
+    for (int i = 0; i < 4; i++){
         if(i==0)
             aux[i] = gerarAleatorio(1,9) + '0';
         else
@@ -47,10 +47,10 @@ void preencherMatriz(Registro mat[][N])
             snprintf(auxEmail, 45, "P%d%d@example.com", i+1, j+1);
             strcpy(mat[i][j].email, auxEmail);
             mat[i][j].cpf = gerarCpf();
-            mat[i][j].telefone = gerarAleatorio(100000000, 899999999);
+            mat[i][j].telefone = gerarAleatorio(1000, 9999);
             mat[i][j].data_nascimento.dia = gerarAleatorio(1, 30);
             mat[i][j].data_nascimento.mes = gerarAleatorio(1, 12);
-            mat[i][j].data_nascimento.ano = gerarAleatorio(1950, 54);
+            mat[i][j].data_nascimento.ano = gerarAleatorio(2000, 22);
         }
     }
 }
@@ -71,13 +71,30 @@ void imprimirMatriz(Registro mat[][N])
 void imprimirVetor(Registro *vet, int n)
 {
     for (int i = 0; i < n; i++){
-        printf("CPF: %ld\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\n", 
+        printf("CPF: %ld\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\tIdade: %d\n", 
                     vet[i].cpf, vet[i].nome, vet[i].data_nascimento.dia,
                     vet[i].data_nascimento.mes, vet[i].data_nascimento.ano,
-                    vet[i].email, vet[i].telefone);
+                    vet[i].email, vet[i].telefone, vet[i].idade);
         
     }
 }
+
+void imprimirVetor2(Registro *vet, int n)
+{
+    for (int i = 0; i < n; i++){
+        printf("Idade: %d\n", vet[i].idade);
+        
+    }
+}
+
+void imprimirVetor3(int *vet, int n)
+{
+    for (int i = 0; i < n; i++){
+        printf("Idade: %d\n", vet[i]);
+        
+    }
+}
+
 
 void trocar(Registro *vet, int a, int b)
 {
@@ -235,7 +252,7 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
             heap[0].i = mat[auxI][auxJ + 1].i;    
             heap[0].j = mat[auxI][auxJ + 1].j;
         }else{
-            heap[0].cpf = 99999999999;
+            heap[0].cpf = 999999;
         }
         minHeapify(heap, m, 0);
     }
@@ -243,21 +260,37 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
 
 void countingSort(Registro *a, Registro *b, int n, int maior)
 {
-    Registro c[maior];
+    int c[maior];
+    imprimirVetor(a,n);
     for(int i=0; i<maior; i++){
-        c[i].idade = 0;
+        c[i] = 0;
     }
-    for(int j=0; j<n; j++){
-        c[a[j].idade].idade = c[a[j].idade].idade + 1;
+    
+    for(int i=0; i<n; i++){
+        b[i].idade = 0;
     }
-    for(int i=0; i<maior; i++){
-        c[i].idade = c[i].idade + c[i-1].idade;
+
+
+    for(int j=1; j<n; j++){
+        c[a[j].idade]= c[a[j].idade]+ 1;
     }
-    for(int j=n-1; j>=0; j--){
-        b[c[a[j].idade].idade].idade = a[j].idade;
-        c[a[j].idade].idade = c[a[j].idade].idade - 1;
+
+
+    for(int i=1; i<maior; i++){
+        c[i] = c[i] + c[i-1];
     }
-    imprimirVetor(b,n);
+    imprimirVetor3(c,maior);
+    /*
+    for(int j=n-1; j>=1; j--){
+        int aux = a[j].idade;
+        //b[c[aux]].idade = aux;
+        c[aux] = c[aux] - 1;
+    }*/
+    printf("maior: %d\n",maior);
+
+    printf("-----Counting sort-----\n");
+    imprimirVetor2(b,M*N);
+
 }
 
 int calcIdade(Data data)
@@ -277,6 +310,7 @@ void buscarFaixa(Registro *a, Registro *b, int n, Data data)
             maiorIdade = a[i].idade;
     }
     countingSort(a, b, M*N, maiorIdade);
+
 }
 
 
@@ -292,11 +326,12 @@ int main()
     //imprimirMatriz(mat);
     kWayMerge(mat, heap, vetFinal, M, N);
     printf("-----Vetor ordenado-----\n");
-    imprimirVetor(vetFinal,  M*N);
+    //imprimirVetor(vetFinal,  M*N);
 
     //Quinta questao
     Registro vetFinal2[M*N];
     buscarFaixa(vetFinal, vetFinal2, M*N, vetFinal[M*N-1].data_nascimento);
+    
     return 0;
 }
 
