@@ -261,36 +261,26 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
 void countingSort(Registro *a, Registro *b, int n, int maior)
 {
     int c[maior];
-    imprimirVetor(a,n);
-    for(int i=0; i<maior; i++){
+    for(int i=0; i<=maior; i++)
         c[i] = 0;
-    }
-    
-    for(int i=0; i<n; i++){
-        b[i].idade = 0;
-    }
 
+    for(int j=0; j<n; j++)
+        c[a[j].idade]++;
 
-    for(int j=1; j<n; j++){
-        c[a[j].idade]= c[a[j].idade]+ 1;
-    }
-
-
-    for(int i=1; i<maior; i++){
+    for(int i=1; i<=maior; i++)
         c[i] = c[i] + c[i-1];
-    }
+        
     imprimirVetor3(c,maior);
-    /*
-    for(int j=n-1; j>=1; j--){
+    
+    for(int j=n-1; j>=0; j--){
         int aux = a[j].idade;
-        //b[c[aux]].idade = aux;
-        c[aux] = c[aux] - 1;
-    }*/
-    printf("maior: %d\n",maior);
+        b[c[aux]-1].idade = aux;
+        c[aux]--;
+    }
+    //printf("maior: %d\n",maior);
 
     printf("-----Counting sort-----\n");
     imprimirVetor2(b,M*N);
-
 }
 
 int calcIdade(Data data)
@@ -313,10 +303,9 @@ void buscarFaixa(Registro *a, Registro *b, int n, Data data)
 
 }
 
-
 int main()
 {
-    //srand(time(NULL));
+    srand(time(NULL));
     Registro mat[M][N];
     Registro heap[M];
     Registro vetFinal[M*N];
