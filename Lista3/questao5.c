@@ -16,6 +16,7 @@ typedef struct registro{
     char nome[15], email[45];
     int i, j;
     Data data_nascimento;  
+    int idade;
 }Registro;
 
 int gerarAleatorio(int inferior, int superior)
@@ -245,8 +246,9 @@ void countingSort(Registro *a, Registro *b, int n, int maior)
     Registro c[maior];
     for(int i=0; i<maior; i++)
         c[i].cpf = 0;
-    for(int j=1; i<n; j++)
-        c[a[j].data_nascimento] = 0;
+    for(int j=1; i<n; j++){
+        c[a[j].data_nascimento].data_nascimento = 0;
+    }
 }
 
 int calcIdade(Data data)
@@ -261,9 +263,9 @@ void buscarFaixa(Registro *a, Registro *b, int n, Data data)
 {
     int maiorIdade = -1;
     for(int i=0; i<n; i++){
-        int idade = calcIdade(a[i].data_nascimento);
-        if(idade > maiorIdade)
-            maiorIdade = idade;
+        a[i].idade = calcIdade(a[i].data_nascimento);
+        if(a[i].idade > maiorIdade)
+            maiorIdade = a[i].idade;
     }
     countingSort(a, b, M*N, maiorIdade);
 }
