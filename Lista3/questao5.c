@@ -244,11 +244,20 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
 void countingSort(Registro *a, Registro *b, int n, int maior)
 {
     Registro c[maior];
-    for(int i=0; i<maior; i++)
-        c[i].cpf = 0;
-    for(int j=1; i<n; j++){
-        c[a[j].data_nascimento].data_nascimento = 0;
+    for(int i=0; i<maior; i++){
+        c[i].idade = 0;
     }
+    for(int j=0; j<n; j++){
+        c[a[j].idade].idade = c[a[j].idade].idade + 1;
+    }
+    for(int i=0; i<maior; i++){
+        c[i].idade = c[i].idade + c[i-1].idade;
+    }
+    for(int j=n-1; j>=0; j--){
+        b[c[a[j].idade].idade].idade = a[j].idade;
+        c[a[j].idade].idade = c[a[j].idade].idade - 1;
+    }
+    imprimirVetor(b,n);
 }
 
 int calcIdade(Data data)
