@@ -59,12 +59,10 @@ void buscar_k_esimo(int *vet, int n, int k)
 {
     int aux[k], z;
     montaMinHeap(vet, TAM);
-    imprimirVetor(vet);
     for(int i = 0; i<k; i++){
         aux[i] = vet[0];
         vet[0] = __INT_MAX__;
-        minHeapify(vet, n, 0);
-        
+        minHeapify(vet, k, 0);
     }
     printf("%dº menor elemento: %d\n",k, aux[k-1]);
 }
@@ -75,6 +73,7 @@ int main()
     srand(time(NULL));
     int reg[TAM];
     preencherVetor(reg);
+    imprimirVetor(reg);
     int k = gerarAleatorio(1, TAM);
     printf("Buscar o %dº menor elemento\n",k);
     buscar_k_esimo(reg, TAM, k);
