@@ -285,44 +285,30 @@ void buscarFaixa(Registro *a, int n)
     int cont=0;
     int *c;
     while(resp!=0){
+        printf("\n-----Buscar quantidade de clientes por faixa de idade-----\n");
+        printf("Digite a menor idade: ");
+        scanf("%d", &inferior);
+        printf("Digite a maior idade: ");
+        scanf("%d", &superior);
         if(cont==0){
             for(int i=0; i<n; i++){
                 a[i].idade = calcIdade(a[i].data_nascimento);
                 if(a[i].idade > maiorIdade)
                     maiorIdade = a[i].idade;
             }
+            printf("-----Vetor ordenado-----\n");
             imprimirVetor(a, M*N);
-
-            printf("\n-----Buscar quantidade de clientes por faixa de idade-----\n");
-            printf("Digite a menor idade: ");
-            scanf("%d", &inferior);
-            printf("Digite a maior idade: ");
-            scanf("%d", &superior);
-
+            printf("------------------------\n");
             c = malloc((maiorIdade+1)*sizeof(int));
             countingSort(a, c, n, maiorIdade);
-
-            if(inferior > maiorIdade)
-                qtd = 0;
-            else if(superior > maiorIdade)
-                qtd = c[maiorIdade] - c[inferior-1];
-            else
-                qtd = c[superior] - c[inferior-1];
-            printf("Quantidade de clientes com idades entre %d e %d: %d\n", inferior, superior, qtd);
-        }else{
-            printf("\n-----Buscar quantidade de clientes por faixa de idade-----\n");
-            printf("Digite a menor idade: ");
-            scanf("%d", &inferior);
-            printf("Digite a maior idade: ");
-            scanf("%d", &superior);
-            if(inferior > maiorIdade)
-                qtd = 0;
-            else if(superior > maiorIdade)
-                qtd = c[maiorIdade] - c[inferior-1];
-            else
-                qtd = c[superior] - c[inferior-1];
-            printf("Quantidade de clientes com idades entre %d e %d: %d\n", inferior, superior, qtd);
         }
+        if(inferior > maiorIdade)
+            qtd = 0;
+        else if(superior > maiorIdade)
+            qtd = c[maiorIdade] - c[inferior-1];
+        else
+            qtd = c[superior] - c[inferior-1];
+        printf("Quantidade de clientes com idades entre %d e %d: %d\n", inferior, superior, qtd);
         cont++;
         printf("Tecle 1 para continuar pesquisando ou 0 para finalizar o programa: ");
         scanf("%d", &resp);
@@ -340,7 +326,6 @@ int main()
     ordenarVetores(mat);
     //imprimirMatriz(mat);
     kWayMerge(mat, heap, vetFinal, M, N);
-    printf("-----Vetor ordenado-----\n");
     //imprimirVetor(vetFinal,  M*N);
 
     //Quinta questao
