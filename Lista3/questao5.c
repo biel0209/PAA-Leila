@@ -258,34 +258,24 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
     }
 }
 
-void countingSort(Registro *a, Registro *b, int n, int maior)
+void countingSort(Registro *a, Registro *b, int *c, int n, int maior, int inferior, int superior)
 {
-    int c[maior+1];
+    
     for(int i=0; i<=maior; i++)
         c[i] = 0;
-
     for(int j=0; j<n; j++)
         c[a[j].idade]++;
-
-    
-
     for(int i=1; i<=maior; i++)
         c[i] = c[i] + c[i-1];
-
-
-    imprimirVetor3(c,maior+1);
-        
-    
     
     for(int j=n-1; j>=0; j--){
         int aux = a[j].idade;
         b[c[aux]-1].idade = aux;
-        c[aux]--;
     }
-    //printf("maior: %d\n",maior);
-
+    imprimirVetor3(c,maior+1);
     printf("-----Counting sort-----\n");
     imprimirVetor2(b,M*N);
+
 }
 
 int calcIdade(Data data)
@@ -296,7 +286,7 @@ int calcIdade(Data data)
         return ANO_ATUAL - data.ano;
 }
 
-void buscarFaixa(Registro *a, Registro *b, int n, Data data)
+int buscarFaixa(Registro *a, Registro *b, int n, int inferior, int superior)
 {
     int maiorIdade = -1;
     for(int i=0; i<n; i++){
@@ -304,9 +294,16 @@ void buscarFaixa(Registro *a, Registro *b, int n, Data data)
         if(a[i].idade > maiorIdade)
             maiorIdade = a[i].idade;
     }
-    imprimirVetor(a,  M*N);
-
-    countingSort(a, b, M*N, maiorIdade);
+    imprimirVetor(a, M*N);
+    int c[maiorIdade+1];
+    countingSort(a, b, c, M*N, maiorIdade, inferior, superior);
+    int limiteSup, limiteInf;
+    if(inferior > maiorIdade)
+        return 0;
+    else if(superior > maiorIdade)
+        return c[maiorIdade] - c[inferior-1];
+    else
+        return c[superior] - c[inferior-1];
 
 }
 
@@ -326,8 +323,16 @@ int main()
 
     //Quinta questao
     Registro vetFinal2[M*N];
-    buscarFaixa(vetFinal, vetFinal2, M*N, vetFinal[M*N-1].data_nascimento);
-    
+    int inferior, superior;
+    printf("\n-----Buscar quantidade de clientes por faixa de idade-----\n");
+    printf("Digite a menor idade: ");
+    scanf("%d", &inferior);
+    printf("Digite a maior idade: ");
+    scanf("%d", &superior);
+
+    int qtd = buscarFaixa(vetFinal, vetFinal2, M*N, inferior, superior);
+    printf("Quantidade de clientes com idades entre %d e %d: %d\n", inferior, superior, qtd);
+
     return 0;
 }
 
