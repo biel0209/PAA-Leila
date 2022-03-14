@@ -279,16 +279,17 @@ int calcIdade(Data data)
 
 void buscarFaixa(Registro *a, int n, int cont)
 {
-    int inferior, superior, qtd, maior, resp=1, *c;
+    int inferior, superior, qtd;
+    int maiorIdade = -1;
+    int resp=1;
+    int *c;
     while(resp!=0){
         if(cont==0){
-            int maiorIdade = -1;
             for(int i=0; i<n; i++){
                 a[i].idade = calcIdade(a[i].data_nascimento);
                 if(a[i].idade > maiorIdade)
                     maiorIdade = a[i].idade;
             }
-            maior = maiorIdade;
             imprimirVetor(a, M*N);
 
             printf("\n-----Buscar quantidade de clientes por faixa de idade-----\n");
@@ -313,10 +314,10 @@ void buscarFaixa(Registro *a, int n, int cont)
             scanf("%d", &inferior);
             printf("Digite a maior idade: ");
             scanf("%d", &superior);
-            if(inferior > maior)
+            if(inferior > maiorIdade)
                 qtd = 0;
-            else if(superior > maior)
-                qtd = c[maior] - c[inferior-1];
+            else if(superior > maiorIdade)
+                qtd = c[maiorIdade] - c[inferior-1];
             else
                 qtd = c[superior] - c[inferior-1];
             printf("Quantidade de clientes com idades entre %d e %d: %d\n", inferior, superior, qtd);
