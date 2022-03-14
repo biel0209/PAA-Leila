@@ -258,24 +258,15 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
     }
 }
 
-void countingSort(Registro *a, Registro *b, int *c, int n, int maior, int inferior, int superior)
+void countingSort(Registro *a, int *c, int n, int maior, int inferior, int superior)
 {
-    
     for(int i=0; i<=maior; i++)
         c[i] = 0;
     for(int j=0; j<n; j++)
         c[a[j].idade]++;
     for(int i=1; i<=maior; i++)
         c[i] = c[i] + c[i-1];
-    
-    for(int j=n-1; j>=0; j--){
-        int aux = a[j].idade;
-        b[c[aux]-1].idade = aux;
-    }
     imprimirVetor3(c,maior+1);
-    printf("-----Counting sort-----\n");
-    imprimirVetor2(b,M*N);
-
 }
 
 int calcIdade(Data data)
@@ -286,7 +277,7 @@ int calcIdade(Data data)
         return ANO_ATUAL - data.ano;
 }
 
-int buscarFaixa(Registro *a, Registro *b, int n, int inferior, int superior)
+int buscarFaixa(Registro *a, int n, int inferior, int superior)
 {
     int maiorIdade = -1;
     for(int i=0; i<n; i++){
@@ -296,8 +287,7 @@ int buscarFaixa(Registro *a, Registro *b, int n, int inferior, int superior)
     }
     imprimirVetor(a, M*N);
     int c[maiorIdade+1];
-    countingSort(a, b, c, M*N, maiorIdade, inferior, superior);
-    int limiteSup, limiteInf;
+    countingSort(a, c, M*N, maiorIdade, inferior, superior);
     if(inferior > maiorIdade)
         return 0;
     else if(superior > maiorIdade)
@@ -321,18 +311,24 @@ int main()
     printf("-----Vetor ordenado-----\n");
     //imprimirVetor(vetFinal,  M*N);
 
-    //Quinta questao
-    Registro vetFinal2[M*N];
+    //Quinta questao - primeira consulta
     int inferior, superior;
     printf("\n-----Buscar quantidade de clientes por faixa de idade-----\n");
     printf("Digite a menor idade: ");
     scanf("%d", &inferior);
     printf("Digite a maior idade: ");
     scanf("%d", &superior);
-
-    int qtd = buscarFaixa(vetFinal, vetFinal2, M*N, inferior, superior);
+    int qtd = buscarFaixa(vetFinal, M*N, inferior, superior);
     printf("Quantidade de clientes com idades entre %d e %d: %d\n", inferior, superior, qtd);
-
+    /*
+    //Segunda consulta
+    printf("\n-----Buscar quantidade de clientes por faixa de idade-----\n");
+    printf("Digite a menor idade: ");
+    scanf("%d", &inferior);
+    printf("Digite a maior idade: ");
+    scanf("%d", &superior);
+    qtd = vetFreq[superior] - vetFreq[inferior-1];
+    printf("Quantidade de clientes com idades entre %d e %d: %d\n", inferior, superior, qtd);*/
     return 0;
 }
 
