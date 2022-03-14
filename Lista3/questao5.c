@@ -26,9 +26,9 @@ int gerarAleatorio(int inferior, int superior)
 
 long gerarCpf()
 {
-    char *aux = malloc(4*sizeof(char));
+    char *aux = malloc(11*sizeof(char));
     char *ptr;
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < 11; i++){
         if(i==0)
             aux[i] = gerarAleatorio(1,9) + '0';
         else
@@ -47,7 +47,7 @@ void preencherMatriz(Registro mat[][N])
             snprintf(auxEmail, 45, "P%d%d@example.com", i+1, j+1);
             strcpy(mat[i][j].email, auxEmail);
             mat[i][j].cpf = gerarCpf();
-            mat[i][j].telefone = gerarAleatorio(1000, 9999);
+            mat[i][j].telefone = gerarAleatorio(10000000, 899999999);
             mat[i][j].data_nascimento.dia = gerarAleatorio(1, 30);
             mat[i][j].data_nascimento.mes = gerarAleatorio(1, 12);
             mat[i][j].data_nascimento.ano = gerarAleatorio(1950, 54);
@@ -252,7 +252,7 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
             heap[0].i = mat[auxI][auxJ + 1].i;    
             heap[0].j = mat[auxI][auxJ + 1].j;
         }else{
-            heap[0].cpf = 999999;
+            heap[0].cpf = 99999999999;
         }
         minHeapify(heap, m, 0);
     }
