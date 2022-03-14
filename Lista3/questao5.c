@@ -90,7 +90,7 @@ void imprimirVetor2(Registro *vet, int n)
 void imprimirVetor3(int *vet, int n)
 {
     for (int i = 0; i < n; i++){
-        printf("Idade: %d\n", vet[i]);
+        printf("i: %d Idade: %d\n", i,vet[i]);
         
     }
 }
@@ -260,17 +260,22 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
 
 void countingSort(Registro *a, Registro *b, int n, int maior)
 {
-    int c[maior];
+    int c[maior+1];
     for(int i=0; i<=maior; i++)
         c[i] = 0;
 
     for(int j=0; j<n; j++)
         c[a[j].idade]++;
 
+    
+
     for(int i=1; i<=maior; i++)
         c[i] = c[i] + c[i-1];
+
+
+    imprimirVetor3(c,maior+1);
         
-    imprimirVetor3(c,maior);
+    
     
     for(int j=n-1; j>=0; j--){
         int aux = a[j].idade;
@@ -299,13 +304,15 @@ void buscarFaixa(Registro *a, Registro *b, int n, Data data)
         if(a[i].idade > maiorIdade)
             maiorIdade = a[i].idade;
     }
+    imprimirVetor(a,  M*N);
+
     countingSort(a, b, M*N, maiorIdade);
 
 }
 
 int main()
 {
-    srand(time(NULL));
+    //srand(time(NULL));
     Registro mat[M][N];
     Registro heap[M];
     Registro vetFinal[M*N];
