@@ -258,7 +258,7 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
     }
 }
 
-void countingSort(Registro *a, int *c, int n, int maior, int inferior, int superior)
+void countingSort(Registro *a, int *c, int n, int maior)
 {
     for(int i=0; i<=maior; i++)
         c[i] = 0;
@@ -300,7 +300,7 @@ void buscarFaixa(Registro *a, int n)
             scanf("%d", &superior);
 
             c = malloc((maiorIdade+1)*sizeof(int));
-            countingSort(a, c, M*N, maiorIdade, inferior, superior);
+            countingSort(a, c, n, maiorIdade);
 
             if(inferior > maiorIdade)
                 qtd = 0;
