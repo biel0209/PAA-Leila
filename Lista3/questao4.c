@@ -207,7 +207,7 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
         heap[i].i = mat[i][0].i;
         heap[i].j = mat[i][0].j;
     }
-    montaMinHeap(heap, M);
+    montaMinHeap(heap, m);
     for (int i=0; i<tamV; i++){ 
         strcpy(vetFinal[i].email, heap[0].email);
         vetFinal[i].cpf = heap[0].cpf;
