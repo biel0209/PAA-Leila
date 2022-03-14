@@ -277,11 +277,12 @@ int calcIdade(Data data)
         return ANO_ATUAL - data.ano;
 }
 
-void buscarFaixa(Registro *a, int n, int cont)
+void buscarFaixa(Registro *a, int n)
 {
     int inferior, superior, qtd;
     int maiorIdade = -1;
     int resp=1;
+    int cont=0;
     int *c;
     while(resp!=0){
         if(cont==0){
@@ -343,7 +344,7 @@ int main()
     //imprimirVetor(vetFinal,  M*N);
 
     //Quinta questao
-    buscarFaixa(vetFinal, M*N, 0);
+    buscarFaixa(vetFinal, M*N);
     return 0;
 }
 
