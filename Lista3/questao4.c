@@ -254,5 +254,18 @@ int main()
     return 0;
 }
 
-
- 
+void compararCpf(int *str1, int *str2)
+{
+    for(int i=0; i<11; i++){
+        if(str1[i] <= str2[i]){
+            printf("menor: str\n");
+            break; //return
+        }
+        else if(str1[i] > str2[i]){
+            printf("menor: str2\n");
+            break; //return
+        }
+        else
+            i++;
+    }
+}
