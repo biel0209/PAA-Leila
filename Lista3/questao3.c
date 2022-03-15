@@ -33,18 +33,18 @@ void trocar(int *vet, int a, int b)
 
 void minHeapify(int *vet, int n, int i)
 {
-    int maior = i;
+    int menor = i;
     int esq = (2*i)+1;
     int dir = (2*i)+2;
     if (esq < n && vet[esq] < vet[i])
-        maior = esq;
+        menor = esq;
     
-    if (dir < n && vet[dir] < vet[maior])
-        maior = dir;
+    if (dir < n && vet[dir] < vet[menor])
+        menor = dir;
    
-    if (maior != i){
-        trocar(vet, maior, i);  
-        minHeapify(vet, n, maior);
+    if (menor != i){
+        trocar(vet, menor, i);  
+        minHeapify(vet, n, menor);
     }
 }
 
