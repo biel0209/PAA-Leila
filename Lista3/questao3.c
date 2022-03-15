@@ -57,8 +57,9 @@ void montaMinHeap(int *vet, int n)
 
 void buscar_k_esimo(int *vet, int n, int k)
 {
-    int aux[k], z;
-    montaMinHeap(vet, TAM);
+    int aux[k];
+    montaMinHeap(vet, n);
+
     for(int i = 0; i<k; i++){
         aux[i] = vet[0];
         vet[0] = __INT_MAX__;
