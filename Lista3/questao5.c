@@ -12,7 +12,8 @@ typedef struct data{
 }Data;
 
 typedef struct registro{
-    long cpf, telefone;             
+    long telefone; 
+    char cpf[12];            
     char nome[15], email[45];
     int i, j;
     Data data_nascimento;  
@@ -24,17 +25,28 @@ int gerarAleatorio(int inferior, int superior)
     return inferior + rand() % superior;
 }
 
-long gerarCpf()
+char* gerarCpf()
 {
     char *aux = malloc(11*sizeof(char));
-    char *ptr;
     for (int i = 0; i < 11; i++){
         if(i==0)
             aux[i] = gerarAleatorio(1,9) + '0';
         else
             aux[i] = gerarAleatorio(0,9) + '0';
     }
-    return atol(aux);
+    return aux;
+}
+
+//Recebe duas strings e retorna true se a primeira for menor que a segunda ou false caso contrario
+int compararCpf(char *str1, char *str2)
+{
+    for(int i=0; i<11; i++){
+        if(str1[i] < str2[i])
+            return 1;
+        else if(str1[i] > str2[i])
+            return 0;
+    }
+    return 1;
 }
 
 void preencherMatriz(Registro mat[][N])
@@ -46,8 +58,8 @@ void preencherMatriz(Registro mat[][N])
             strcpy(mat[i][j].nome, auxNome);
             snprintf(auxEmail, 45, "P%d%d@example.com", i+1, j+1);
             strcpy(mat[i][j].email, auxEmail);
-            mat[i][j].cpf = gerarCpf();
-            mat[i][j].telefone = gerarAleatorio(10000000, 899999999);
+            strcpy(mat[i][j].cpf, gerarCpf());
+            mat[i][j].telefone = gerarAleatorio(100000000, 899999999);
             mat[i][j].data_nascimento.dia = gerarAleatorio(1, 30);
             mat[i][j].data_nascimento.mes = gerarAleatorio(1, 12);
             mat[i][j].data_nascimento.ano = gerarAleatorio(1950, 54);
@@ -60,7 +72,7 @@ void imprimirMatriz(Registro mat[][N])
     for (int i = 0; i < M; i++){
         printf("-----Loja %d-----\n", i+1);
         for(int j = 0; j < N; j++){
-            printf("CPF: %ld\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\n", 
+            printf("CPF: %s\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\n", 
                         mat[i][j].cpf, mat[i][j].nome, mat[i][j].data_nascimento.dia,
                         mat[i][j].data_nascimento.mes, mat[i][j].data_nascimento.ano,
                         mat[i][j].email, mat[i][j].telefone);
@@ -71,7 +83,7 @@ void imprimirMatriz(Registro mat[][N])
 void imprimirVetor(Registro *vet, int n)
 {
     for (int i = 0; i < n; i++){
-        printf("CPF: %ld\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\tIdade: %d\n", 
+        printf("CPF: %s\tNome: %s\tNascimento: %d/%d/%d\tEmail: %s\tTelefone: %ld\tIdade: %d\n", 
                     vet[i].cpf, vet[i].nome, vet[i].data_nascimento.dia,
                     vet[i].data_nascimento.mes, vet[i].data_nascimento.ano,
                     vet[i].email, vet[i].telefone, vet[i].idade);
@@ -101,7 +113,7 @@ void trocar(Registro *vet, int a, int b)
     Registro aux;
     
     strcpy(aux.email, vet[b].email);
-    aux.cpf = vet[b].cpf;
+    strcpy(aux.cpf, vet[b].cpf);
     aux.telefone = vet[b].telefone;
     strcpy(aux.nome, vet[b].nome);
     aux.data_nascimento.dia = vet[b].data_nascimento.dia;
@@ -111,7 +123,7 @@ void trocar(Registro *vet, int a, int b)
     aux.j = vet[b].j;
 
     strcpy(vet[b].email, vet[a].email);
-    vet[b].cpf = vet[a].cpf;
+    strcpy(vet[b].cpf, vet[a].cpf);
     vet[b].telefone = vet[a].telefone;
     strcpy(vet[b].nome, vet[a].nome);
     vet[b].data_nascimento.dia = vet[a].data_nascimento.dia;
@@ -121,7 +133,7 @@ void trocar(Registro *vet, int a, int b)
     vet[b].j = vet[a].j;
 
     strcpy(vet[a].email, aux.email);
-    vet[a].cpf = aux.cpf;
+    strcpy(vet[a].cpf, aux.cpf);
     vet[a].telefone = aux.telefone;
     strcpy(vet[a].nome, aux.nome);
     vet[a].data_nascimento.dia = aux.data_nascimento.dia;
@@ -136,10 +148,10 @@ void maxHeapify(Registro *vet, int n, int i)
     int maior = i;
     int esq = (2*i)+1;
     int dir = (2*i)+2;
-    if (esq < n && vet[esq].cpf > vet[i].cpf)
+    if (esq < n && compararCpf(vet[i].cpf, vet[esq].cpf))
         maior = esq;
     
-    if (dir < n && vet[dir].cpf > vet[maior].cpf)
+    if (dir < n && compararCpf(vet[maior].cpf, vet[dir].cpf))
         maior = dir;
    
     if (maior != i){
@@ -170,10 +182,10 @@ void minHeapify(Registro *vet, int n, int i)
     int menor = i;
     int esq = (2*i)+1;
     int dir = (2*i)+2;
-    if (esq < n && vet[esq].cpf < vet[i].cpf)
+    if (esq < n && compararCpf(vet[esq].cpf, vet[i].cpf))
         menor = esq;
     
-    if (dir < n && vet[dir].cpf < vet[menor].cpf)
+    if (dir < n && compararCpf(vet[dir].cpf, vet[menor].cpf))
         menor = dir;
    
     if (menor != i){
@@ -218,7 +230,7 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
     int tamV = m*n; //tamanho que o vetor final terá
     for (int i=0; i<m; i++){
         strcpy(heap[i].email, mat[i][0].email);
-        heap[i].cpf = mat[i][0].cpf;
+        strcpy(heap[i].cpf, mat[i][0].cpf);
         heap[i].telefone = mat[i][0].telefone;
         strcpy(heap[i].nome, mat[i][0].nome);
         heap[i].data_nascimento.dia = mat[i][0].data_nascimento.dia;
@@ -227,10 +239,10 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
         heap[i].i = mat[i][0].i;
         heap[i].j = mat[i][0].j;
     }
-    montaMinHeap(heap, M);
+    montaMinHeap(heap, m);
     for (int i=0; i<tamV; i++){ 
         strcpy(vetFinal[i].email, heap[0].email);
-        vetFinal[i].cpf = heap[0].cpf;
+        strcpy(vetFinal[i].cpf, heap[0].cpf);
         vetFinal[i].telefone = heap[0].telefone;
         strcpy(vetFinal[i].nome, heap[0].nome);
         vetFinal[i].data_nascimento.dia = heap[0].data_nascimento.dia;
@@ -243,7 +255,7 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
             int auxI = heap[0].i;
             int auxJ = heap[0].j;
             strcpy(heap[0].email, mat[auxI][auxJ + 1].email);
-            heap[0].cpf = mat[auxI][auxJ + 1].cpf;
+            strcpy(heap[0].cpf, mat[auxI][auxJ + 1].cpf);
             heap[0].telefone = mat[auxI][auxJ + 1].telefone;
             strcpy(heap[0].nome, mat[auxI][auxJ + 1].nome);
             heap[0].data_nascimento.dia = mat[auxI][auxJ + 1].data_nascimento.dia;
@@ -252,7 +264,7 @@ void kWayMerge(Registro mat[][N], Registro *heap, Registro *vetFinal, int m, int
             heap[0].i = mat[auxI][auxJ + 1].i;    
             heap[0].j = mat[auxI][auxJ + 1].j;
         }else{
-            heap[0].cpf = 99999999999;
+            strcpy(heap[0].cpf, "99999999999");
         }
         minHeapify(heap, m, 0);
     }
