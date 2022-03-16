@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
+
 #include <time.h>
 #include <math.h>
 
 int buscar(long chave, long *vet, long x)
 {
-    for(long a=0; a<x; a++){
+    for(long a=0; a*a*a<x; a++){
         if(vet[a] == chave)
             return 1;
     }
@@ -14,11 +16,8 @@ int buscar(long chave, long *vet, long x)
 
 int teste()
 {
-    int resp=0;
     long a;
-    long x = 36575; 
-    float limite2 = pow(x, 1.0/3.0)+1;
-
+    long x = 703657519796; 
     int limite = pow(x, 1.0/3.0)+1;
     long vet[limite];
     long b;
@@ -40,17 +39,14 @@ int teste()
 
 int main()
 {
-    //int a=2;
-    //int b=3;
-    //int x = 16;
-    /*
-    Se x=16 e a = 1, no máximo, b = raiz cubica de x - 1 
-    vet[b] 
-    */
-    
-    
+    clock_t t = clock();
+
+    //Algoritmo
     printf("resposta=%d\n",teste());
+    //Algoritmo
     
+    double Tempo = (clock() - t) * 1000.0 / CLOCKS_PER_SEC;
+    printf("Tempo gasto: %g ms.\n", Tempo);
     return 0;
 }
 
