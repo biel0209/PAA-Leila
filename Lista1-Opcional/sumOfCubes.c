@@ -3,22 +3,34 @@
 #include <time.h>
 #include <math.h>
 
+int buscar(long long chave, long long *vet, long long x)
+{
+    for(long long a=0; a<=x; a++){
+        if(vet[a] == chave)
+            return 1;
+    }
+    return 0;
+}
+
 int teste()
 {
     int resp=0;
-    int a;
-    double x = 1; 
-    int b;
+    long long a;
+    long long x = 703657519796; 
     int limite = pow(x, 1.0/3.0)+1;
-    for(a=1; a<=limite; a++){
-        for(b=1; b<=limite; b++){
-            int aux = pow(a, 3) + pow(b, 3);
-            if(aux == x){
-                printf("x=%.0f\ta=%d\tb=%d\n",x,a,b);
-                return 1;
-            }
+    long long vet[8895];
+    long long b;
+    
+    for(a=1; a*a*a<=x; a++){
+        vet[a] = a*a*a;
+    }
+    
+    for(b=1; b<=x; b++){
+        if(buscar(x-(b*b*b), vet, x)){
+            return 1;
         }
     }
+    
     return 0;
 }
 
