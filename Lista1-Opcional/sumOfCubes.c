@@ -3,9 +3,9 @@
 #include <time.h>
 #include <math.h>
 
-int buscar(long long chave, long long *vet, long long x)
+int buscar(long chave, long *vet, long x)
 {
-    for(long long a=0; a<=x; a++){
+    for(long a=0; a<x; a++){
         if(vet[a] == chave)
             return 1;
     }
@@ -15,18 +15,22 @@ int buscar(long long chave, long long *vet, long long x)
 int teste()
 {
     int resp=0;
-    long long a;
-    long long x = 703657519796; 
+    long a;
+    long x = 36575; 
+    float limite2 = pow(x, 1.0/3.0)+1;
+
     int limite = pow(x, 1.0/3.0)+1;
-    long long vet[8895];
-    long long b;
+    long vet[limite];
+    long b;
+
+
     
-    for(a=1; a*a*a<=x; a++){
+    for(a=1; a*a*a<x; a++){
         vet[a] = a*a*a;
     }
     
-    for(b=1; b<=x; b++){
-        if(buscar(x-(b*b*b), vet, x)){
+    for(b=1; b*b*b<x; b++){
+        if(buscar( x-(b*b*b), vet, x) ){
             return 1;
         }
     }
