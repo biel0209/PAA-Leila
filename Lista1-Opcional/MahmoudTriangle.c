@@ -21,40 +21,21 @@ void countingSort(int *vet, int *vet2, int n)
     }
 }
 
-int validarTriangulo(int a, int b, int c)
-{
-    if (a+b>c && a+c>b && c+b>a)
-        return 1;
-    else
-        return 0;
-}
-
 int varrerVetor(int *vet, int n)
 {
-    for(int i=2; i<n; i++){
-        if (validarTriangulo(vet[i], vet[i-1], vet[i-2]))
-            return 1;
-    }
-    return 0;
-}
-
-int varrerVetor2(int *vet, int n)
-{
-    int cont=0;
     for(int i=n-1; i>=1; i--){
-        int l=0, r=i-1;
-        while(l < r){
-            if (vet[l] + vet[r] > vet[i]){
+        int esq=0;
+        int dir=i-1;
+        while(esq < dir){
+            if (vet[esq] + vet[dir] > vet[i])
                 return 1;
-            }else
-                l++;
+            else
+                esq++;
         }
     }
     return 0;
 }
 
-
- 
 int main()
 { 
     int n;
@@ -66,10 +47,10 @@ int main()
 
     countingSort(vet,vet2,n);
 
-    if (varrerVetor2(vet2, n))
-        printf("sim\n");
+    if (varrerVetor(vet2, n))
+        printf("YES\n");
     else
-        printf("nao\n");
+        printf("NO\n");
 
     return 0;
 }
