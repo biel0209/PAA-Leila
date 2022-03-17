@@ -23,15 +23,9 @@ void countingSort(int *vet, int *vet2, int n)
 
 int varrerVetor(int *vet, int n)
 {
-    for(int i=n-1; i>=1; i--){
-        int esq=0;
-        int dir=i-1;
-        while(esq < dir){
-            if (vet[esq] + vet[dir] > vet[i])
-                return 1;
-            else
-                esq++;
-        }
+    for(int i=0; i<n-2; i++){
+        if (vet[i] + vet[i+1] > vet[i+2])
+            return 1;
     }
     return 0;
 }
