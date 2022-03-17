@@ -1,33 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void swap(int *arr, int i, int j)
+void trocar(int *arr, int a, int b)
 {
-    int temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
+    int aux = arr[a];
+    arr[a] = arr[b];
+    arr[b] = aux;
 }
 
-int partition(int *arr, int low, int high)
+int partition(int *arr, int esq, int dir)
 {
-    int pivot = arr[high];
-    int i = (low - 1);
-    for(int j = low; j <= high - 1; j++){
-        if (arr[j] < pivot){
+    int pivo = arr[dir];
+    int i = (esq - 1);
+    for(int j = esq; j <= dir - 1; j++){
+        if (arr[j] < pivo){
             i++;
-            swap(arr, i, j);
+            trocar(arr, i, j);
         }
     }
-    swap(arr, i + 1, high);
-    return (i + 1);
+    trocar(arr, i + 1, dir);
+    return i + 1;
 }
 
-void quickSort(int *arr, int low, int high)
+void quickSort(int *arr, int esq, int dir)
 {
-    if (low < high){
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+    if (esq < dir){
+        int pivo = partition(arr, esq, dir);
+        quickSort(arr, esq, pivo - 1);
+        quickSort(arr, pivo + 1, dir);
     }
 }
 
@@ -51,7 +51,7 @@ int main()
 
     quickSort(vet, 0, n - 1);
     
-    if (varrerVetor(vet2, n))
+    if (varrerVetor(vet, n))
         printf("YES\n");
     else
         printf("NO\n");
