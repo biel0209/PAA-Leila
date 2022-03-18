@@ -1,33 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void trocar(int *arr, int a, int b)
+void merge(int *vet, int esq, int m, int dir)
 {
-    int aux = arr[a];
-    arr[a] = arr[b];
-    arr[b] = aux;
-}
-
-int partition(int *arr, int esq, int dir)
-{
-    int pivo = arr[dir];
-    int i = (esq - 1);
-    for(int j = esq; j <= dir - 1; j++){
-        if (arr[j] < pivo){
+    int i, j, k;
+    int n1 = m - esq + 1;
+    int n2 = dir - m;
+  
+    int A[n1], B[n2];
+    for (i = 0; i < n1; i++)
+        A[i] = vet[esq + i];
+    for (j = 0; j < n2; j++)
+        B[j] = vet[m + 1 + j];
+  
+    i = 0, j = 0; 
+    k = esq; 
+    while (i < n1 && j < n2) {
+        if (A[i] <= B[j]) {
+            vet[k] = A[i];
             i++;
-            trocar(arr, i, j);
         }
+        else {
+            vet[k] = B[j];
+            j++;
+        }
+        k++;
     }
-    trocar(arr, i + 1, dir);
-    return i + 1;
+ 
+    while (i < n1) {
+        vet[k] = A[i];
+        i++;
+        k++;
+    }
+  
+    while (j < n2) {
+        vet[k] = B[j];
+        j++;
+        k++;
+    }
 }
-
-void quickSort(int *arr, int esq, int dir)
+  
+void mergeSort(int *vet, int esq, int dir)
 {
-    if (esq < dir){
-        int pivo = partition(arr, esq, dir);
-        quickSort(arr, esq, pivo - 1);
-        quickSort(arr, pivo + 1, dir);
+    if (esq < dir) {
+        int m = esq + (dir - esq) / 2;
+        mergeSort(vet, esq, m);
+        mergeSort(vet, m + 1, dir);
+        merge(vet, esq, m, dir);
     }
 }
 
@@ -48,8 +67,8 @@ int main()
     for(int i=0; i<n; i++){
         scanf("%d",&vet[i]);
     }
-
-    quickSort(vet, 0, n - 1);
+    
+    mergeSort(vet, 0, n - 1);
     
     if (varrerVetor(vet, n))
         printf("YES\n");
