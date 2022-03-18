@@ -2,14 +2,17 @@
 #include <stdlib.h>
 #include <math.h>
  
+long long int a, b;
+
 int testarCubos(long long int x)
 {
-    long a = 1;
-    long b = (long)pow(x, 1.0/3.0);
+    a = 1;
+    b = (long long int)pow(x, 1.0/3.0);
     while(a <= b){
         long long int atual = a*a*a + b*b*b;
-        if(atual == x)
+        if(atual == x){
             return 1;
+        }
         if(atual < x)
             a++;
         else
