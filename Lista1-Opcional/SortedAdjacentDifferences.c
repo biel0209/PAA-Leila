@@ -1,64 +1,77 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <limits.h>
 
-void bubbleSort2(long *vet, int n)
+void merge(long *vet, long esq, long m, long dir)
 {
-    for (int i = 0; i < n; i++){  
-        for (int j = 0; j < n-2; j++){
-            if (abs(vet[j]-vet[j+1]) > abs(vet[j+1]-vet[j+2])){
-                long temp = vet[j];
-                vet[j] = vet[j+2];
-                vet[j+2] = temp;
-            }
+    long i, j, k;
+    long n1 = m - esq + 1;
+    long n2 = dir - m;
+  
+    long A[n1], B[n2];
+    for (i = 0; i < n1; i++)
+        A[i] = vet[esq + i];
+    for (j = 0; j < n2; j++)
+        B[j] = vet[m + 1 + j];
+  
+    i = 0, j = 0; 
+    k = esq; 
+    while (i < n1 && j < n2) {
+        if (A[i] <= B[j]) {
+            vet[k] = A[i];
+            i++;
         }
-   }
+        else {
+            vet[k] = B[j];
+            j++;
+        }
+        k++;
+    }
+ 
+    while (i < n1) {
+        vet[k] = A[i];
+        i++;
+        k++;
+    }
+  
+    while (j < n2) {
+        vet[k] = B[j];
+        j++;
+        k++;
+    }
 }
-
-void bubbleSort(long *vet, int n)
+  
+void mergeSort(long *vet, long esq, long dir)
 {
-    for (int i = 0; i < n-1; i++){  
-        for (int j = 0; j < n-i-1; j++){
-            if (vet[j] > vet[j+1]){
-                long temp = vet[j];
-                vet[j] = vet[j+1];
-                vet[j+1] = temp;
-            }
-        }
-   }
-   
+    if (esq < dir) {
+        long m = esq + (dir - esq) / 2;
+        mergeSort(vet, esq, m);
+        mergeSort(vet, m + 1, dir);
+        merge(vet, esq, m, dir);
+    }
 }
 
 void rearranjarVetor(long *vet, long *vetRearr, int n)
 {   
     
-    for (long i = 0, k=0; i < n; i+=2){
-        long menorDiferenca = labs(vet[0]-vet[1]);
-        long index = 0;
-        for (long j = 1; j < n-1; j++){
-            if (labs(vet[j]-vet[j+1]) < menorDiferenca){
-                menorDiferenca = labs(vet[j]-vet[j+1]);
-                index = j;
-            }
+    long esq = 0;
+    long dir = n-1;
+    for (long i = n-1; i >= 0; i--){
+        if(i % 2 == 1){
+            vetRearr[i] = vet[esq];
+            esq++;
+        }else{
+            vetRearr[i] = vet[dir];
+            dir--;
         }
-        vetRearr[i] = vet[index];
-        vetRearr[i+1] = vet[index+1];
-
-        
-        /*for (int i=0; i < n; i++)
-            printf("%ld ", vetRearr[i]);
-        printf("\n");*/
     }
 
 }
- 
 int main()
 {
     int qtd_testes;
-    long n = 10;
-    long vet[10] = {9, 0, 5, 3, 7, 2, 3, 8, 10, 15};
-    long vetRearr[10];
+    long n = 6;
+    long vet[6] = {5,-2,4,8,6,5};
+    long vetRearr[6];
     //scanf("%d",&qtd_testes);
 
 
@@ -70,13 +83,11 @@ int main()
         else
             vet[i] = 0; 
     }*/
+    mergeSort(vet, 0, n-1);
     rearranjarVetor(vet, vetRearr, n);
 
     for (int i=0; i < n; i++)
         printf("%ld ", vetRearr[i]);
     printf("\n");
-    
-    
-
     return 0;  
 }
