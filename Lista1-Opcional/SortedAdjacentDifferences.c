@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void merge(long *vet, long esq, long m, long dir)
+void merge(int *vet, int esq, int m, int dir)
 {
-    long i, j, k;
-    long n1 = m - esq + 1;
-    long n2 = dir - m;
+    int i, j, k;
+    int n1 = m - esq + 1;
+    int n2 = dir - m;
   
-    long A[n1], B[n2];
+    int A[n1], B[n2];
     for (i = 0; i < n1; i++)
         A[i] = vet[esq + i];
     for (j = 0; j < n2; j++)
@@ -40,22 +40,22 @@ void merge(long *vet, long esq, long m, long dir)
     }
 }
   
-void mergeSort(long *vet, long esq, long dir)
+void mergeSort(int *vet, int esq, int dir)
 {
     if (esq < dir) {
-        long m = esq + (dir - esq) / 2;
+        int m = esq + (dir - esq) / 2;
         mergeSort(vet, esq, m);
         mergeSort(vet, m + 1, dir);
         merge(vet, esq, m, dir);
     }
 }
 
-void rearranjarVetor(long *vet, long *vetRearr, int n)
+void rearranjarVetor(int *vet, int *vetRearr, int n)
 {   
     
-    long esq = 0;
-    long dir = n-1;
-    for (long i = n-1; i >= 0; i--){
+    int esq = 0;
+    int dir = n-1;
+    for (int i = n-1; i >= 0; i--){
         if(i % 2 == 1){
             vetRearr[i] = vet[esq];
             esq++;
@@ -66,28 +66,29 @@ void rearranjarVetor(long *vet, long *vetRearr, int n)
     }
 
 }
+
+void preencherVetor(int *vet, int n)
+{
+    for(int i=0; i<n; i++){
+        scanf("%d",&vet[i]);
+    }
+}
+
 int main()
 {
     int qtd_testes;
-    long n = 6;
-    long vet[6] = {5,-2,4,8,6,5};
-    long vetRearr[6];
-    //scanf("%d",&qtd_testes);
-
-
-    /*
+    scanf("%ld",&qtd_testes);
     for(int i=0; i<qtd_testes; i++){
-        scanf("%ld",&x);
-        if(testarCubos(x))
-            vet[i] = 1; 
-        else
-            vet[i] = 0; 
-    }*/
-    mergeSort(vet, 0, n-1);
-    rearranjarVetor(vet, vetRearr, n);
-
-    for (int i=0; i < n; i++)
-        printf("%ld ", vetRearr[i]);
-    printf("\n");
+        int lenght;
+        scanf("%d",&lenght);
+        int vet[lenght];
+        int vetRearr[lenght];
+        preencherVetor(vet, lenght);
+        mergeSort(vet, 0, lenght-1);
+        rearranjarVetor(vet, vetRearr, lenght);
+        for (int i=0; i < lenght; i++)
+            printf("%d ", vetRearr[i]);
+        printf("\n");
+    }
     return 0;  
 }
