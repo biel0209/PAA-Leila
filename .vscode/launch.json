@@ -5,6 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch Questao1_KMP",
+            "request": "launch",
+            "mainClass": "Lista4.Questao1_KMP",
+            "projectName": "PAA-Leila_4f523da1"
+        },
+        {
+            "type": "java",
+            "name": "Debug Attach",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 8787
+        },
+        {
+            "type": "java",
+            "name": "Launch Java",
+            "request": "launch",
+            "mainClass": "${file}",
+            "projectName": "PAA-Leila_4f523da1"
+        },
+        {
             "name": "gcc-9 - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
