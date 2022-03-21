@@ -6,42 +6,37 @@ public class Questao1_KMP{
         String texto1 = "marararmarmararmar";
         String texto2 = "marmarararmarararmarmarmarmararar";
         String texto3 = "marararmarmararmarmararmarmar";
-        System.out.println("oi");
-
-        //System.out.println(KMP(texto1, texto1.length(), padrao, padrao.length()));
+        int resp = KMP(texto1, texto1.length(), padrao, padrao.length());
+        System.out.println(resp);
     }
 
     public static void computaNext(String P, int m, int[] next){
-        next[0] = -1;
-        next[1] = 0;
-        for(int i=2; i<m; i++){
-            int j = next[i-1] + 1;
-            while(P.charAt(i-1) != P.charAt(j) && j>0){
-                j = next[j]+1;
-                next[i] = j;
+        next[0] = 0;
+        int k=0;
+        for(int i=1; i<m; i++){
+            while(P.charAt(k+1) != P.charAt(i) && k>0){
+                k = next[k];
             }
+            if (P.charAt(k+1) == P.charAt(i))
+                k++;
+            next[i] = k;
         }
     }
 
     public static int KMP(String T, int n, String P, int m){
-        int[] next = new int[m];
+        int next[] = new int[m];
         computaNext(P, m, next);
-        int i=0, j=0, index = -1;
-        while(index == -1 && i<=n){
-            if (P.charAt(j) == T.charAt(i)){
-                j++;
-                i++;
-            }else{
-                j = next[j]+1;
-                if(j==0){
-                    j = 1;
-                    i++;
-                }
-
-            }
-            if(j == m+1)
+        int q=0, index = -1;
+        for(int i=1; i<n; i++){
+            while(P.charAt(q+1) != T.charAt(i) && q>0)
+                q = next[q];
+            if (P.charAt(q+1) == T.charAt(i))
+                q++;
+            if(q == m){
                 index = i-m;
+                q = next[q];
+            }
         }
         return index;
     }
-}
+}   
