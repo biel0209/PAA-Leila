@@ -6,7 +6,7 @@ public class Questao1_KMP{
         String texto1 = "marararmarmararmar";
         String texto2 = "marmarararmarararmarmarmarmararar";
         String texto3 = "marararmarmararmarmararmarmar";
-        System.out.println("asd");
+        System.out.println("oi");
 
         //System.out.println(KMP(texto1, texto1.length(), padrao, padrao.length()));
     }
