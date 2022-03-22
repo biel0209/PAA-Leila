@@ -1,7 +1,6 @@
 package Lista4;
 
 class Indice{
-    int indice;
     int quantidade;
     int texto;
 }
@@ -9,24 +8,26 @@ class Indice{
 public class Questao1_KMP{
     public static void main(String[] args){
         String padrao = "mar";
-        int n = 3; 
+        int n = 4; 
         String [] texto = new String[n];
         texto[0] = "marararmarmararmar";
-        texto[1] = "marmarararmarararmarmarmarmararar";
-        texto[2] = "marararmarmararmarmararmarmar";
+        texto[1] = "marararmarararmarmarmarmararar";
+        texto[2] = "ararmarmarmarmararmarmararmarmar";
+        texto[3] = "marararararmarmarararmararmarararmarar";
         maisRelevante(texto, texto.length, padrao, padrao.length());
     }
 
     public static void maisRelevante(String T[], int n, String P, int m){
         Indice index[] = new Indice[n];
         for(int i=0; i<n; i++){
-            index[i] = KMP(T[i], T[i].length(), P, m);
+            index[i] = new Indice();
+            index[i].quantidade = KMP(T[i], T[i].length(), P, m);
             index[i].texto = i;
         }
         for(int i=0; i<n; i++){
-            System.out.println("Texto "+i+1+" Quantidade de ocorrencias: "+
-                                index[i].quantidade + "Index da primeira ocorrencia: "+
-                                index[i].indice);
+            System.out.println("Texto "+(index[i].texto+1) +
+                                " Quantidade de ocorrencias: " +
+                                  index[i].quantidade);
         }
     }
 
@@ -43,36 +44,36 @@ public class Questao1_KMP{
                 if(n != 0) {
                     n = next[n-1];
                 }else{
-                    next[i] = 0;
+                    next[i] = n;
                     i++;
                 }
             }
         }
     }
 
-    public static Indice KMP(String T, int n, String P, int m){
-        Indice index = new Indice();
-        index.quantidade = 0;
+    public static int KMP(String T, int n, String P, int m){
+        int qtdOcorrencias = 0;
         int next[] = new int[m];
         computaNext(P, m, next);
         int i=0, j=0;
-        index.indice = -1;
         while(i<n){
-            if( P.charAt(j) == T.charAt(i)){
+            if( P.charAt(j) == T.charAt(i) ){
                 j++;
                 i++;
-            }else{
-                if(j==0){
-                    i++;
-                }else{
-                    j = next[j-1];
-                }
-            }if (j == m){
-                index.quantidade = index.quantidade + 1;
-                index.indice = i-j;
+            }
+            if (j == m){
+                qtdOcorrencias++;
                 j = next[j-1];
             }
+            else if( P.charAt(j) != T.charAt(i) ){
+                if(j==0)
+                    i++;
+                else
+                    j = next[j-1];
+            }
         }
-        return index;
+        return qtdOcorrencias;
     }
 }   
+
+
