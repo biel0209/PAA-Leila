@@ -1,19 +1,19 @@
-package Lista4;
+//package Lista4;
 
 class Indice{
     int quantidade;
     int texto;
 }
 
-public class Questao1_KMP{
+public class Main{
     public static void main(String[] args){
         String padrao = "mar";
         int n = 4; 
         String [] texto = new String[n];
         texto[0] = "marararmarmararmar";
         texto[1] = "marararmarararmarmarmarmararar";
-        texto[2] = "ararmarmarmarmararmarmararmarmar";
-        texto[3] = "ararmarmarmararararmararmarararmarmarararmar";;
+        texto[2] = "arararmarmarmararmarmararmarmar";
+        texto[3] = "arararmarmararararmararmarararmarmarararmar";;
         maisRelevante(texto, texto.length, padrao, padrao.length());
     }
 
@@ -22,7 +22,7 @@ public class Questao1_KMP{
         Indice index[] = new Indice[n];
         for(int i=0; i<n; i++){
             index[i] = new Indice();
-            index[i].quantidade = KMP(T[i], T[i].length(), P, m);
+            index[i].quantidade = Horspool(T[i], T[i].length(), P, m);
             index[i].texto = i;
         }
 
@@ -48,46 +48,27 @@ public class Questao1_KMP{
         }
     }
 
-    public static void computaNext(String P, int m, int next[]){
-        next[0] = 0;
-        int n=0;
-        int i=1;
-        while(i<m){
-            if(P.charAt(i) == P.charAt(n)){
-                n++;
-                next[i] = n;
-                i++;
-            }else{
-                if(n != 0) {
-                    n = next[n-1];
-                }else{
-                    next[i] = n;
-                    i++;
-                }
-            }
-        }
+    public static void computaDesloc(String P, int m, int D[], int tam){
+        for(int j=0; j<tam; j++)
+            D[j] = m;
+        for(int j=0; j<m-2; j++)
+            D[P.charAt(j)] = m-1-j;
     }
 
-    public static int KMP(String T, int n, String P, int m){
-        int qtdOcorrencias = 0;
-        int next[] = new int[m];
-        computaNext(P, m, next);
-        int i=0, j=0;
-        while(i<n){
-            if( P.charAt(j) == T.charAt(i) ){
-                j++;
-                i++;
-            }
-            if (j == m){
+    public static int Horspool(String T, int n, String P, int m){
+        int qtdOcorrencias=0;
+        int D[] = new int[256];
+        computaDesloc(P, m, D, 256);
+        int i=m-1, index=-1;
+        while(i<n-1 && index==-1){
+            int k=0;
+            while(k<=m-1 && P.charAt(m-1-k) == T.charAt(i-k))
+                k++;
+            if(k==m){
                 qtdOcorrencias++;
-                j = next[j-1];
             }
-            else if( P.charAt(j) != T.charAt(i) ){
-                if(j==0)
-                    i++;
-                else
-                    j = next[j-1];
-            }
+            else
+                i = i + D[T.charAt(i)];
         }
         return qtdOcorrencias;
     }
