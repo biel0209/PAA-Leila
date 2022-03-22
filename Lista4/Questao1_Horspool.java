@@ -12,8 +12,8 @@ public class Main{
         String [] texto = new String[n];
         texto[0] = "marararmarmararmar";
         texto[1] = "marararmarararmarmarmarmararar";
-        texto[2] = "arararmarmarmararmarmararmarmar";
-        texto[3] = "arararmarmararararmararmarararmarmarararmar";;
+        texto[2] = "ararmarmarmarmararmarmararmarmar";
+        texto[3] = "ararmarmarmararararmararmarararmarmarararmar";;
         maisRelevante(texto, texto.length, padrao, padrao.length());
     }
 
@@ -40,11 +40,11 @@ public class Main{
         System.out.println("Texto(s) mais relevante(s):");
         //Buscar repetidos
         for(int i=0; i<n; i++){
-            if(maior.quantidade == index[i].quantidade){
+            //if(maior.quantidade == index[i].quantidade){
                 System.out.println("Texto de indice " + index[i].texto +
                                     " Quantidade de ocorrencias: " +
                                     index[i].quantidade);
-            }
+            //}
         }
     }
 
@@ -66,6 +66,7 @@ public class Main{
                 k++;
             if(k==m){
                 qtdOcorrencias++;
+                i++;
             }
             else
                 i = i + D[T.charAt(i)];
