@@ -1,11 +1,11 @@
-//package Lista4;
+package Lista4;
 
 class Indice{
     int quantidade;
     int texto;
 }
 
-public class Main{
+public class Questao1_Horspool{
     public static void main(String[] args){
         String padrao = "mar";
         int n = 4; 
@@ -40,18 +40,18 @@ public class Main{
         System.out.println("Texto(s) mais relevante(s):");
         //Buscar repetidos
         for(int i=0; i<n; i++){
-            //if(maior.quantidade == index[i].quantidade){
+            if(maior.quantidade == index[i].quantidade){
                 System.out.println("Texto de indice " + index[i].texto +
                                     " Quantidade de ocorrencias: " +
                                     index[i].quantidade);
-            //}
+            }
         }
     }
 
     public static void computaDesloc(String P, int m, int D[], int tam){
         for(int j=0; j<tam; j++)
             D[j] = m;
-        for(int j=0; j<m-2; j++)
+        for(int j=0; j<=m-2; j++)
             D[P.charAt(j)] = m-1-j;
     }
 
@@ -59,17 +59,14 @@ public class Main{
         int qtdOcorrencias=0;
         int D[] = new int[256];
         computaDesloc(P, m, D, 256);
-        int i=m-1, index=-1;
-        while(i<n-1 && index==-1){
+        int i=m-1;
+        while(i<=n-1){
             int k=0;
             while(k<=m-1 && P.charAt(m-1-k) == T.charAt(i-k))
                 k++;
-            if(k==m){
+            if(k==m)
                 qtdOcorrencias++;
-                i++;
-            }
-            else
-                i = i + D[T.charAt(i)];
+            i = i + D[T.charAt(i)];
         }
         return qtdOcorrencias;
     }
