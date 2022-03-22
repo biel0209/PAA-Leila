@@ -13,21 +13,38 @@ public class Questao1_KMP{
         texto[0] = "marararmarmararmar";
         texto[1] = "marararmarararmarmarmarmararar";
         texto[2] = "ararmarmarmarmararmarmararmarmar";
-        texto[3] = "marararararmarmarararmararmarararmarar";
+        texto[3] = "ararmarmarmararararmararmarararmarmarararmar";;
         maisRelevante(texto, texto.length, padrao, padrao.length());
     }
 
     public static void maisRelevante(String T[], int n, String P, int m){
+        //Busca de cada quantidade de ocorrencias de P em cada Texto
         Indice index[] = new Indice[n];
         for(int i=0; i<n; i++){
             index[i] = new Indice();
             index[i].quantidade = KMP(T[i], T[i].length(), P, m);
             index[i].texto = i;
         }
+
+        //Buscar o(s) texto(s) mais relevante(s)
+        Indice maior = new Indice();
+        maior.quantidade = index[0].quantidade;
+        maior.texto = index[0].texto;
         for(int i=0; i<n; i++){
-            System.out.println("Texto "+(index[i].texto+1) +
-                                " Quantidade de ocorrencias: " +
-                                  index[i].quantidade);
+            if(maior.quantidade < index[i].quantidade){
+                maior.quantidade = index[i].quantidade;
+                maior.texto = index[i].texto;
+            }
+        }
+
+        System.out.println("Texto(s) mais relevante(s):");
+        //Buscar repetidos
+        for(int i=0; i<n; i++){
+            if(maior.quantidade == index[i].quantidade){
+                System.out.println("Texto de indice " + index[i].texto +
+                                    " Quantidade de ocorrencias: " +
+                                    index[i].quantidade);
+            }
         }
     }
 
