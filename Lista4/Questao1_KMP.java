@@ -12,8 +12,8 @@ public class Questao1_KMP{
         String [] texto = new String[n];
         texto[0] = "marararmarmararmar";
         texto[1] = "marararmarararmarmarmarmararar";
-        texto[2] = "ararmarmarmarmararmarmararmarmar";
-        texto[3] = "ararmarmarmararararmararmarararmarmarararmar";;
+        texto[2] = "ararmarmarmarmararmarmararmarmar";  
+        texto[3] = "ararmarmarmararararmararmarararmarmarararmar";
         maisRelevante(texto, texto.length, padrao, padrao.length());
     }
 
