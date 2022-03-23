@@ -22,7 +22,7 @@ public class Questao2{
         //Busca da quantidade de ocorrencias de cada P no Texto
         for(int i=0; i<m; i++){
             int qtd = Rabin_Karp(T, n, P[i], m, q, d, h2);
-            System.out.println("Padrao de indice " + i +
+            System.out.println("Padrao: '" + P[i] + "' indice: " + i +
                 " Quantidade de ocorrencias no texto: " + qtd);
         }
     }
@@ -31,16 +31,17 @@ public class Questao2{
         int h1 = 0, dM = 1, contador = 0;
         for(int i=0; i < m-1; i++)
             dM = (dM*d)%q;
-        for (int i=0; i < m; i++) //Pre processamento do padrao
+            
+        //Pre processamento do padrao    
+        for (int i=0; i < m; i++) 
             h1 = (h1*d + P.charAt(i))%q;
+            
         for (int i=0; i <= n-m; i++){
             if(h1 == h2)
                 contador++;
             if(i < n-m){
-                //h2 = (h2 + (d*q - T.charAt(i)*dM))%q;
-                h2 = (d*(h2 - T.charAt(i)*dM) + T.charAt(i+m))%q;
-                if(h2<0)
-                    h2 = h2+q;
+                h2 = (h2 + (d*q - T.charAt(i)*dM))%q;
+                h2 = (h2*d + T.charAt(i+m))%q;
             }
         }
         return contador;
