@@ -21,7 +21,7 @@ public class Questao2{
             
         //Busca da quantidade de ocorrencias de cada P no Texto
         for(int i=0; i<m; i++){
-            int qtd = Rabin_Karp(T, n, P[i], m, q, d, h2);
+            int qtd = Rabin_Karp(T, n, P[i], P[i].length(), q, d, h2);
             System.out.println("Padrao: '" + P[i] + "' indice: " + i +
                 " Quantidade de ocorrencias no texto: " + qtd);
         }
