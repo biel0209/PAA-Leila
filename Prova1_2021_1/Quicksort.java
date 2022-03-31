@@ -22,11 +22,11 @@ public class Quicksort {
                 X[L] = X[R];
                 X[R] = aux;
             }
-        }
-
-        for (int i = 0; i < X.length; i++){
-            System.out.println(X[i]);
-        }  
+            for (int i = 0; i < X.length; i++){
+                System.out.print(X[i]+" ");
+            }
+            System.out.println("");
+        } 
     }
 
     public static void main(String args[]) {
@@ -34,6 +34,12 @@ public class Quicksort {
         Quicksort sort = new Quicksort();
 
         String[] cores = {"verde", "azul", "verde", "amarelo", "amarelo", "verde", "verde", "amarelo", "azul", "amarelo"};
+
+        for (int i = 0; i < cores.length; i++){
+            System.out.print(cores[i]+" ");
+        } 
+        System.out.println("");
+
 
         sort.quickSort(cores, 0, cores.length-1);
     }
