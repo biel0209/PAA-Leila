@@ -8,7 +8,7 @@ class Matriz{
 public class LCS {
     public static void main(String[] args){
         String str1 = "abcdfg";
-        String str2 = "acg";
+        String str2 = "agh";
         char[] X = str1.toCharArray();
         char[] Y = str2.toCharArray();
         int m = X.length;
