@@ -16,6 +16,7 @@ public class LCS {
         Matriz LCS[][] = new Matriz[m+1][n+1];
         inicializarMatriz(LCS,m,n);
         maiorSequencia(X, m, Y, n, LCS);
+        imprimeLCS(LCS, m, n, X);
     }
 
     public static void inicializarMatriz(Matriz[][] LCS, int m, int n){
@@ -55,6 +56,21 @@ public class LCS {
                 }
             }
         }
-        System.out.println(LCS[m][n].tam);
+        System.out.println("Tamanho da maior sequencia comum: " + LCS[m][n].tam);
     }
+
+    public static void imprimeLCS(Matriz[][] LCS, int i, int j, char[] X){
+        if (i!=0 || j!=0){
+            if(LCS[i][j].dir == 'D'){
+                imprimeLCS(LCS, i-1, j-1, X);
+                System.out.print(X[i-1]);
+            }else{
+                if(LCS[i][j].dir == 'A')
+                    imprimeLCS(LCS, i-1, j, X);
+                else
+                    imprimeLCS(LCS, i, j-1, X);
+            }
+        }
+    }
+
 }
