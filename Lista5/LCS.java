@@ -60,7 +60,7 @@ public class LCS {
     }
 
     public static void imprimeLCS(Matriz[][] LCS, int i, int j, char[] X){
-        if (i!=0 || j!=0){
+        if (!(i==0 || j==0)){
             if(LCS[i][j].dir == 'D'){
                 imprimeLCS(LCS, i-1, j-1, X);
                 System.out.print(X[i-1]);
