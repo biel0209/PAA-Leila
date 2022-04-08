@@ -18,7 +18,6 @@ public class Questao2 {
         Matriz LCS[][] = new Matriz[m+1][m+1];
         inicializarMatriz(LCS,m);
         maiorSequencia(X, m, m, LCS);
-        imprimeLCS(LCS, m, m, X);
     }
 
     public static void inicializarMatriz(Matriz[][] LCS, int m){
@@ -131,6 +130,7 @@ public class Questao2 {
             }
         }
         System.out.println("Tamanho da maior sequencia ordenada: " + LCS[m][n].tam);
+        imprimeLCS(LCS, m, n, X);
     }
 
     public static void imprimeLCS(Matriz[][] LCS, int i, int j, Dados_Covid[] X){
