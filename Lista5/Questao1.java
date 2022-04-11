@@ -5,7 +5,7 @@ class Matriz{
     char dir;
 }
 
-public class LCS {
+public class Questao1 {
     public static void main(String[] args){
         String str1 = "abcdfg";
         String str2 = "agh";
@@ -15,8 +15,8 @@ public class LCS {
         int n = Y.length;
         Matriz LCS[][] = new Matriz[m+1][n+1];
         inicializarMatriz(LCS,m,n);
-        maiorSequencia(X, m, Y, n, LCS);
-        imprimeLCS(LCS, m, n, X);
+        editLCS(X, m, Y, n, LCS);
+        //imprimeLCS(LCS, m, n, X);
     }
 
     public static void inicializarMatriz(Matriz[][] LCS, int m, int n){
@@ -27,7 +27,7 @@ public class LCS {
         }
     }
 
-    public static void maiorSequencia(char[] X, int m, char[] Y, int n, Matriz[][] LCS){
+    public static void editLCS(char[] X, int m, char[] Y, int n, Matriz[][] LCS){
         for(int i=0; i<=m; i++){
             LCS[i][0].tam = 0;
             LCS[i][0].dir = '*';

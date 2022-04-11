@@ -102,13 +102,11 @@ public class Questao2 {
         mergeSort(Y, 0, m-1);
         
         for(int i=0; i<=m; i++){
-            LCS[i][0] = new Matriz();
             LCS[i][0].tam = 0;
             LCS[i][0].dir = '*';
         }
 
         for(int j=0; j<=n; j++){
-            LCS[0][j] = new Matriz();
             LCS[0][j].tam = 0;
             LCS[0][j].dir = '*';
         }
