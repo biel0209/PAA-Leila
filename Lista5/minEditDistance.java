@@ -1,9 +1,9 @@
 package Lista5;
 
-public class Questao1 {
+public class minEditDistance {
     public static void main(String[] args){
-        String str1 = "acb";
-        String str2 = "ab";
+        String str1 = "sunday";
+        String str2 = "saturday";
         char[] X = str1.toCharArray();
         char[] Y = str2.toCharArray();
         int m = X.length;
@@ -12,17 +12,10 @@ public class Questao1 {
         minEditDistance(X, m, Y, n, M);
     }
 
-    public static int min(int a, int b){
-        if(a < b) 
+    public static int min(int a, int b, int c){
+        if(a <= b && a <= c) 
             return a;
-        else
-            return b;
-    }
-
-    public static int max(int a, int b, int c){
-        if(a >= b && a >= c) 
-            return a;
-        else if(b >= a && b >= c)
+        else if(b <= a && b <= c)
             return b;
         else
             return c;
@@ -46,7 +39,7 @@ public class Questao1 {
                     z = M[i-1][j-1];
                 else
                     z = M[i-1][j-1] + 1;
-                M[i][j] = min(x, y);
+                M[i][j] = min(x, y, z);
             }
         }
         System.out.println("Minima distancia de edicao: " + M[m][n]);

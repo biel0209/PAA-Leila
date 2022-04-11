@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Questao1",
+            "request": "launch",
+            "mainClass": "Lista5.Questao1",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
             "name": "Launch LCS",
             "request": "launch",
             "mainClass": "Lista5.LCS",
