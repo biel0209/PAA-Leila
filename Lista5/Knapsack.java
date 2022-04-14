@@ -7,7 +7,7 @@ class Matriz{
 
 public class Knapsack {
     public static void main(String[] args){
-        int[] S = {40,60,50};
+        int[] S = {10,20,30};
         int n = S.length;
         int k = 50;
         Matriz P[][] = new Matriz[n+1][k+1];
@@ -42,7 +42,26 @@ public class Knapsack {
                 }
             }
         }
-        System.out.println(P[n][k].existe); 
 
+        System.out.println("Existe solucao? "+P[n][k].existe); 
+
+        imprimirSolucao(S, n, k, P);  
+    }
+
+    public static void imprimirSolucao(int[] S, int n, int k, Matriz[][] P){
+        int j = k;
+        int i = n;
+        while(j >= 0 && i > 0){
+            if(P[i][j].pertence != P[i-1][j].pertence){ //se um é false e outro é true
+                if(P[i][j].pertence){   //se P[i][j] é true, entao S[i-1] faz parte da solução
+                    System.out.println(S[i-1]);
+                    j -= S[i-1];
+                }else{
+                    System.out.println(S[i-2]);  //se P[i-1][j] é true, entao S[i-2] faz parte da solução
+                    j -= S[i-2];
+                }
+            }
+            i--;
+        }   
     }
 }
