@@ -7,17 +7,17 @@ class Matriz{
 
 public class Knapsack {
     public static void main(String[] args){
-        int[] S = {10,20,30};
+        int[] S = {40,60,50};
         int n = S.length;
         int k = 50;
-        Matriz P[][] = new Matriz[n][k];
+        Matriz P[][] = new Matriz[n+1][k+1];
         inicializarMatriz(P, n, k);
         mochila(S, n, k, P);
     }
 
     public static void inicializarMatriz(Matriz[][] P, int n, int k){
-        for(int i=0; i<n; i++){
-            for(int j=0; j<k; j++){
+        for(int i=0; i<=n; i++){
+            for(int j=0; j<=k; j++){
                 P[i][j] = new Matriz();
             }
         }
@@ -25,23 +25,24 @@ public class Knapsack {
 
     public static void mochila(int[] S, int n, int k, Matriz[][] P){
         P[0][0].existe = true;
-        for(int j=1; j<k; k++){
+        for(int j=1; j<=k; j++){
             P[0][j].existe = false;
         }
-        for(int i=1; i<n; n++){
-            for(int j=0; j<k; k++){
+        for(int i=1; i<=n; i++){
+            for(int j=0; j<=k; j++){
                 P[i][j].existe = false;
                 if (P[i-1][j].existe){
                     P[i][j].existe = true;
                     P[i][j].pertence = false;
-                }else if (j - S[i] >= 0){
-                    if(P[i-1][j-S[i]].existe)
+                }else if (j - S[i-1] >= 0){
+                    if(P[i-1][j-S[i-1]].existe){
                         P[i][j].existe = true;
                         P[i][j].pertence = true;
+                    }
                 }
             }
         }
-        System.out.print(P[n-1][k-1]); 
+        System.out.println(P[n][k].existe); 
 
     }
 }
