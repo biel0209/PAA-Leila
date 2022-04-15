@@ -9,7 +9,7 @@ public class minEditDistance {
         int m = X.length;
         int n = Y.length;
         int M[][] = new int[m+1][n+1];
-        minEditDistance(X, m, Y, n, M);
+        searchDistance(X, m, Y, n, M);
     }
 
     public static int min(int a, int b, int c){
@@ -21,7 +21,7 @@ public class minEditDistance {
             return c;
     }
 
-    public static void minEditDistance(char[] X, int m, char[] Y, int n, int[][] M){
+    public static void searchDistance(char[] X, int m, char[] Y, int n, int[][] M){
         int x, y, z;
         for(int i=0; i<=m; i++){
             M[i][0] = i;
@@ -38,7 +38,7 @@ public class minEditDistance {
                 if(X[i-1] == Y[j-1])
                     z = M[i-1][j-1];
                 else
-                    z = M[i-1][j-1] + 1;
+                    z = M[i-1][j-1] +1 ;
                 M[i][j] = min(x, y, z);
             }
         }
