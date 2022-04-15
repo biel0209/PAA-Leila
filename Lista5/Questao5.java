@@ -10,7 +10,7 @@ public class Questao5{
     public static void diferencaMin(int S[], int n) {
 		int soma = 0;
 		for (int i = 0; i < n; i++)
-			soma += S[i];
+			soma += S[i];   
 
 		//array para armazenar resultados dos subproblemas
 		boolean P[][] = new boolean[n + 1][soma + 1]; 
@@ -67,7 +67,7 @@ public class Questao5{
                     S[i-1] = -1;
                 }else{
                     System.out.print(S[i-2]+" ");  //se P[i-1][j] é true, entao S[i-2] faz parte da solução
-                    j -= S[i-2];
+                    j -= S[i-2];    
                     S[i-2] = -1;
                 }
             }
