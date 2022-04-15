@@ -106,7 +106,7 @@ public class Questao2 {
             LCS[i][0].dir = '*';
         }
 
-        for(int j=0; j<=n; j++){
+        for(int j=1; j<=n; j++){
             LCS[0][j].tam = 0;
             LCS[0][j].dir = '*';
         }

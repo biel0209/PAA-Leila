@@ -7,8 +7,8 @@ class Matriz{
 
 public class LCS {
     public static void main(String[] args){
-        String str1 = "abcdfg";
-        String str2 = "agh";
+        String str1 = "abc";
+        String str2 = "ach";
         char[] X = str1.toCharArray();
         char[] Y = str2.toCharArray();
         int m = X.length;
@@ -33,7 +33,7 @@ public class LCS {
             LCS[i][0].dir = '*';
         }
 
-        for(int j=0; j<=n; j++){
+        for(int j=1; j<=n; j++){
             LCS[0][j].tam = 0;
             LCS[0][j].dir = '*';
         }

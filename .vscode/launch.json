@@ -6,6 +6,69 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Questao5_Longa",
+            "request": "launch",
+            "mainClass": "Lista5.Questao5_Longa",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch Knapsack",
+            "request": "launch",
+            "mainClass": "Lista5.Knapsack",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch Questao52",
+            "request": "launch",
+            "mainClass": "Lista5.Questao52",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch Questao5copy",
+            "request": "launch",
+            "mainClass": "Lista5.Questao5copy",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch Questao5",
+            "request": "launch",
+            "mainClass": "Lista5.Questao5",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch minEditDistance",
+            "request": "launch",
+            "mainClass": "Lista5.minEditDistance",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch Questao2",
+            "request": "launch",
+            "mainClass": "Lista5.Questao2",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch LCS",
+            "request": "launch",
+            "mainClass": "Lista5.LCS",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
+            "name": "Launch Questao1",
+            "request": "launch",
+            "mainClass": "Lista5.Questao1",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
             "name": "Launch Questao1",
             "request": "launch",
             "mainClass": "Lista5.Questao1",

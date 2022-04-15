@@ -4,7 +4,6 @@ public class Quicksort {
 
     void quickSort(String[] X, int esq, int dir) {
 
-        String pivo = "amarelo";
         int L = esq;
         int R = dir;
 

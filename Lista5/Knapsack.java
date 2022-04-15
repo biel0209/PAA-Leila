@@ -42,6 +42,7 @@ public class Knapsack {
                 }
             }
         }
+        
 
         System.out.println("Existe solucao? "+P[n][k].existe); 
 

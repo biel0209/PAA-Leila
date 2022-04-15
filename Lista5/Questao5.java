@@ -1,71 +1,83 @@
 package Lista5;
 
-class Struct{
-    int item;
-    boolean existe;  //existe ou não solução
-}
-
-public class Questao5 {
+public class Questao5{
     public static void main(String[] args){
-        int[] itens = {1000, 2000, 1500, 500, 2500};
-        int n = itens.length;
-        System.out.print(diferencaMin(itens, n));
+        int[] S = {1000, 2000, 1500, 500, 2500};
+        int n = S.length;
+        diferencaMin(S, n);
     }
 
-    public static int diferencaMin(int[] itens, int n){
-        int soma = 0;
-        for(int i=0; i<n; i++){
-            soma += itens[i];
+    public static void diferencaMin(int S[], int n) {
+		int soma = 0;
+		for (int i = 0; i < n; i++)
+			soma += S[i];
+
+		//array para armazenar resultados dos subproblemas
+		boolean P[][] = new boolean[n + 1][soma + 1]; 
+	
+		// Inicializa a primeira coluna como verdadeira.
+        // A soma 0 é possível com todos os elementos.      
+		for (int i = 0; i <= n; i++) 
+			P[i][0] = true;
+		
+
+		// Inicializa a primeira linha como false, exceto P[0][0].
+        // Com 0 elementos, nenhuma outra soma, exceto 0, é possível.
+		for (int j = 1; j <= soma; j++) 
+			P[0][j] = false;
+		
+
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= soma; j++) {
+				// Se o elemento não fizer parte da solução
+				P[i][j] = P[i - 1][j];
+
+				// Se o elemento fizer parte da solução
+				if (S[i - 1] <= j)
+					P[i][j] |= P[i - 1][j - S[i - 1]];
+			}
         }
-        int y = soma/2 + 1;
 
-        // dp[i] devolve se é possível obter i como
-        // soma dos elementos 
-        // dd é a variável auxiliar que usamos
-        // para ignorar duplicatas
-        Struct dp[] = new Struct[y];
-        Struct dd[] = new Struct[y];
 
-        //inicializando dp e dd
-        for(int i=0; i<y; i++){
-            dp[i] = new Struct();
-            dp[i].item = -1;
-            dp[i].existe = false;
+		// Buscar o maior j tal que P[n][j] é true
+		// O valor máximo de j é soma/2
+		int difMin = Integer.MAX_VALUE;
+        for (int j = soma / 2; j >= 0; j--) {
+			if (P[n][j] == true) {
+				difMin = soma - 2 * j;
+                break;
+			}
+		}
 
-            dd[i] = new Struct();
-            dd[i].item = -1;
-            dd[i].existe = false;
-        }
+        //k sera o tamanho de um dos subconjuntos
+        int k = (soma-difMin)/2; 
+	
+        printSolucao(S, n, k, P);
+	}
 
-        dd[0].existe = true; //caso da soma ser 0
-        for(int i=0; i<n; i++){
-            //atualizando dd[k] se k for formado
-            //usando elementos de 1 a i+1
-            for(int j=0; j+itens[i] < y; j++){
-                if(dp[j].existe){
-                    dd[j+itens[i]].existe = true;
-                    System.out.println(itens[i]);//
+    public static void printSolucao(int[] S, int n, int k, boolean[][] P){
+        int j = k;
+        int i = n;
+        System.out.print("Subconjunto 1: ");
+        while(j >= 0 && i > 0){
+            if(P[i][j] != P[i-1][j]){ //se um é false e outro é true
+                if(P[i][j]){   //se P[i][j] é true, entao S[i-1] faz parte da solução
+                    System.out.print(S[i-1]+" ");
+                    j -= S[i-1];
+                    S[i-1] = -1;
+                }else{
+                    System.out.print(S[i-2]+" ");  //se P[i-1][j] é true, entao S[i-2] faz parte da solução
+                    j -= S[i-2];
+                    S[i-2] = -1;
                 }
             }
+            i--;
+        }   
 
-            //atualizando dd
-            for(int j=0; j < y; j++){
-                if(dd[j].existe)
-                    dp[j].existe = true;
-                dd[j].existe = false;
-            }
-        }
-
-        //verificando se o numero de soma/2 até 1 
-        //é possível obter como soma
-        for(int i=y-1; i >= 0; i--){
-            if(dp[i].existe)
-                return (soma - 2 * i);
-        }
-        return 0;
-        
-
+        System.out.print("\nSubconjunto 2: ");
+        for (i = 0; i < n; i++) {
+			if(S[i] != -1)
+                System.out.print(S[i]+" ");
+		}
     }
-        
-
 }
