@@ -77,15 +77,13 @@ public class Questao4{
     public static void imprimePostos(Vetor[] P, int m, int[] postos){
         int ultSoma = P[m].soma;
         System.out.print("Postos escolhidos: ");
-        for(int i=m; i >= 0 && ultSoma > 0; i--){
+        int i=m;
+        while(i >= 0 && ultSoma > 0){
             if(ultSoma == P[i].soma){
-                if(P[i].ultValor == 0){
-                    System.out.print(postos[P[i].indice] + " ");
-                }else{
-                    System.out.print(postos[P[i].indice] + " ");
-                    ultSoma = P[i].soma - P[i].ultValor;
-                }
+                System.out.print(postos[P[i].indice] + " ");
+                ultSoma = P[i].soma - P[i].ultValor;
             }
+            i--;
         } 
         System.out.println("");
     }
