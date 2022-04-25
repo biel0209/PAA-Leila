@@ -6,6 +6,48 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Knapsack",
+            "request": "launch",
+            "mainClass": "Lista5.Knapsack",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
+            "name": "Launch Questao1_KMP",
+            "request": "launch",
+            "mainClass": "Lista4.Questao1_KMP",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
+            "name": "Launch Trace",
+            "request": "launch",
+            "mainClass": "Lista2Opcional.Trace",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
+            "name": "Launch Trace",
+            "request": "launch",
+            "mainClass": "Trace",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
+            "name": "Launch Trace",
+            "request": "launch",
+            "mainClass": "Lista2_opcional.Trace",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
+            "name": "Launch Questao4",
+            "request": "launch",
+            "mainClass": "Lista5.Questao4",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
             "name": "Launch Questao5_Longa",
             "request": "launch",
             "mainClass": "Lista5.Questao5_Longa",
