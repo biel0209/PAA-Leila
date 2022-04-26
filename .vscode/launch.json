@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Dreamoon_and_WiFi_Version2",
+            "request": "launch",
+            "mainClass": "Lista2_Opcional.Dreamoon_and_WiFi_Version2",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
+            "name": "Launch Dreamoon_and_WiFi",
+            "request": "launch",
+            "mainClass": "Lista2_Opcional.Dreamoon_and_WiFi",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
+            "name": "Launch The_Great_Julya_Calendar_Version2",
+            "request": "launch",
+            "mainClass": "Lista2_Opcional.The_Great_Julya_Calendar_Version2",
+            "projectName": "PAA-Leila_827cee51"
+        },
+        {
+            "type": "java",
             "name": "Launch Knapsack",
             "request": "launch",
             "mainClass": "Lista5.Knapsack",
