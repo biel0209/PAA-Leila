@@ -4,47 +4,46 @@ import java.util.Scanner;
 
 public class Dreamoon_and_WiFi_Version2 {
   public static void main(String[] args){
+
     Scanner input = new Scanner(System.in);
 
-    String str1 = "++-+-";
-    String str2 = "+-+-+";
+    String str1 = input.nextLine();
+    String str2 = input.nextLine();
     char[] s1 = str1.toCharArray();
     char[] s2 = str2.toCharArray();
 
-    int level = 50, pos = 50;
-    int len1 = s1.length-1;
+    int lin = 50, col = 50;
+    int tam1 = s1.length-1;
+    int tamDp = 100;
 
-    for(int i=1; i <= len1; i++){
-      if(s1[i] == '+')
-        pos++;
+    for(int i=1; i <= tam1; i++){
+      if(s1[i] == '-')
+        col--;
       else
-        pos--;
+        col++;
     }
 
-    double[][] dp = new double[100][100];
-    dp[0][level] = 1;
+    double[][] dp = new double[tamDp][tamDp];
+    dp[0][lin] = 1;
 
-    for(int i=1; i <= len1; i++){
+    for(int i=1; i <= tam1; i++){
       if(s2[i] == '+'){
-        for(int j=1; j<100; j++){
+        for(int j=1; j<tamDp; j++){
           dp[i][j] = dp[i-1][j-1];
         }
       }
-      if(s2[i] == '-'){
-        for(int j=0; j<99; j++){
+      else if(s2[i] == '-'){
+        for(int j=0; j<tamDp-1; j++){
           dp[i][j] = dp[i-1][j+1];
         }
       }
-      if(s2[i] == '?'){
-        for(int j=1; j<99; j++){
+      else if(s2[i] == '?'){
+        for(int j=1; j<tamDp-1; j++){
           dp[i][j] = 0.5*dp[i-1][j-1] + 0.5*dp[i-1][j+1];
         }
       }
     }
-    System.out.println(dp[len1][pos]);
+    System.out.println(dp[tam1][col]);
     input.close();
-  }
-
-
-  
+  } 
 }
