@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Make_Product_Equal_One",
+            "request": "launch",
+            "mainClass": "Lista2_Opcional.Make_Product_Equal_One",
+            "projectName": "PAA-Leila_7fe06251"
+        },
+        {
+            "type": "java",
             "name": "Launch Dreamoon_and_WiFi_Version2",
             "request": "launch",
             "mainClass": "Lista2_Opcional.Dreamoon_and_WiFi_Version2",
