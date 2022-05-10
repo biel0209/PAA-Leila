@@ -1,14 +1,16 @@
 package Lista2_Opcional;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Dreamoon_and_WiFi_Version2 {
   public static void main(String[] args){
 
     Scanner input = new Scanner(System.in);
-
-    String str1 = input.nextLine();
-    String str2 = input.nextLine();
+    String str1 = "--+++---+-";
+    String str2 = "??????????";
+    // String str1 = input.nextLine();
+    // String str2 = input.nextLine();
     char[] s1 = str1.toCharArray();
     char[] s2 = str2.toCharArray();
 
@@ -17,10 +19,10 @@ public class Dreamoon_and_WiFi_Version2 {
     int tamDp = 100;
 
     for(int i=1; i <= tam1; i++){
-      if(s1[i] == '-')
-        col--;
-      else
+      if(s1[i] == '+')
         col++;
+      else
+        col--;
     }
 
     double[][] dp = new double[tamDp][tamDp];
@@ -39,7 +41,7 @@ public class Dreamoon_and_WiFi_Version2 {
       }
       else if(s2[i] == '?'){
         for(int j=1; j<tamDp-1; j++){
-          dp[i][j] = 0.5*dp[i-1][j-1] + 0.5*dp[i-1][j+1];
+          dp[i][j] = (double)(0.5*dp[i-1][j-1]) + (double)(0.5*dp[i-1][j+1]);
         }
       }
     }
