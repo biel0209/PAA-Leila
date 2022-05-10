@@ -30,7 +30,7 @@ public class Make_Product_Equal_One{
       dp[i][1] = Math.min(aux, aux2);
     }
 
-    System.out.println(dp[n][0]);
+    System.out.println((long)dp[n][0]);
     input.close();
   } 
 }
